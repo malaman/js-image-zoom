@@ -10,10 +10,8 @@
         if (!container) {
             return;
         }
-        var element = container.children[0];
+        var image = container.children[0];
+        var zoomedImage = container.appendChild(image.cloneNode(true));
+        zoomedImage.style.width = 'auto';
     }
-};
-
-
-
-
+}));
