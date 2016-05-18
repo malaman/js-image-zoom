@@ -8,10 +8,10 @@
 </head>
 <body>
     <div id='container'>
-        <img src="1.jpeg" width="300"/>
+        <img src="1.jpeg" />
     </div>
     <script>
-        window.imageZoom = new ImageZoom(document.getElementById('container'));
+        window.imageZoom = new ImageZoom(document.getElementById('container'), {width: 300, height: 380, zoomWidth: 600});
     </script>
 </body>
 </html>
