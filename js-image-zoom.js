@@ -11,7 +11,6 @@
      *          @param {number} width Image width
      *          @param {number} height Image height
      *          @param {number} zoomWidth  Zoomed image width
-     *          @param {number} scale zoom scale
      */
     return function ImageZoom(container, options) {
         "use strict";
@@ -22,21 +21,27 @@
         var originalImgWidth;
         var originalImgHeight;
         var div = document.createElement('div');
+        var lensDiv = document.createElement('div');
         var zoomDiv;
+        var zoomLens;
         var scaleX;
         var scaleY;
         var offset;
+        var zoomLensWidth;
+        var zoomLensHeight;
         
         options = options || {};
+        container.style.position = 'absolute';
         image.style.width = options.width + 'px' || 'auto';
         image.style.height = options.height + 'px' || 'auto';
-
+        zoomLens = container.appendChild(lensDiv);
         zoomDiv = container.appendChild(div);
         zoomDiv.style.width = options.zoomWidth + 'px';
         zoomDiv.style.height = image.style.height;
         zoomDiv.style.display = 'inline-block';
         zoomDiv.style.backgroundImage = 'url(' + image.src + ')';
         zoomDiv.style.backgroundRepeat = 'no-repeat';
+
 
         function getOffset(el) {
             if (el) {
@@ -48,13 +53,55 @@
             return {left: 0, top: 0};
         }
 
-        image.onload=function() {
+        function leftLimit(min) {
+            return options.width  - min;
+        }
+
+        function topLimit(min) {
+            return options.height - min;
+        }
+
+        function getValue(val, min, max) {
+            if (val < min) {
+                return min;
+            }
+            if (val > max) {
+                return max;
+            }
+            return val;
+        }
+
+        function getPosition(v, min, max) {
+            const value = getValue(v, min, max);
+            return value - min;
+        }
+
+        function zoomLensLeft(left) {
+            var leftMin = zoomLensWidth / 2;
+            return getPosition(left, leftMin, leftLimit(leftMin));
+        }
+
+        function zoomLensTop(top) {
+            const topMin = zoomLensHeight / 2;
+            return getPosition(top, topMin , topLimit(topMin));
+        }
+
+        image.onload = function() {
             originalImgWidth = image.naturalWidth;
             originalImgHeight = image.naturalHeight;
             zoomDiv.style.backgroundSize = originalImgWidth + 'px ' + originalImgHeight + 'px';
             scaleX = originalImgWidth / options.width;
             scaleY = originalImgHeight / options.height;
-            offset = getOffset(image)
+            offset = getOffset(container);
+            zoomLensWidth = options.zoomWidth / scaleX;
+            zoomLensHeight =options.height / scaleY;
+            zoomLens.style.width = zoomLensWidth + 'px';
+            zoomLens.style.height =  zoomLensHeight + 'px';
+            zoomLens.style.position = 'absolute';
+            zoomLens.style.background = 'white';
+            zoomLens.style.opacity = 0.4;
+            zoomLens.pointerEvents = 'none';
+
         };
 
         var events = {
@@ -64,15 +111,18 @@
                 }
             },
             handleMouseOver: function(event) {
-                var offsetX = event.clientX - offset.left;
-                var offsetY = event.clientY - offset.top;
+                var offsetX = zoomLensLeft(event.clientX - offset.left);
+                var offsetY = zoomLensTop(event.clientY - offset.top);
+
                 var backgroundTop = offsetX * scaleX;
-                var backgroundRight = offsetY * scaleX;
+                var backgroundRight = offsetY * scaleY;
                 var backgroundPosition = '-' + backgroundTop + 'px ' +  '-' + backgroundRight + 'px';
                 zoomDiv.style.backgroundPosition = backgroundPosition;
+                zoomLens.style.top = offsetY + 'px';
+                zoomLens.style.left = offsetX + 'px';
             }
         };
 
-        image.addEventListener('mousemove', events, false);
+        container.addEventListener('mousemove', events, false);
     }
 }));
