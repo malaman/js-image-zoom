@@ -35,12 +35,14 @@
         image.style.width = options.width + 'px' || 'auto';
         image.style.height = options.height + 'px' || 'auto';
         zoomLens = container.appendChild(lensDiv);
+        zoomLens.style.display = 'none';
         zoomDiv = container.appendChild(div);
         zoomDiv.style.width = options.zoomWidth + 'px';
         zoomDiv.style.height = image.style.height;
         zoomDiv.style.display = 'inline-block';
         zoomDiv.style.backgroundImage = 'url(' + image.src + ')';
         zoomDiv.style.backgroundRepeat = 'no-repeat';
+        zoomDiv.style.display = 'none';
 
 
         function getOffset(el) {
@@ -107,10 +109,12 @@
         var events = {
             handleEvent: function(event) {
                 switch(event.type) {
-                    case 'mousemove': return this.handleMouseOver(event);
+                    case 'mousemove': return this.handleMouseMove(event);
+                    case 'mouseenter': return this.handleMouseEnter(event);
+                    case 'mouseleave': return this.handleMouseLeave(event);
                 }
             },
-            handleMouseOver: function(event) {
+            handleMouseMove: function(event) {
                 var offsetX = zoomLensLeft(event.clientX - offset.left);
                 var offsetY = zoomLensTop(event.clientY - offset.top);
 
@@ -120,9 +124,19 @@
                 zoomDiv.style.backgroundPosition = backgroundPosition;
                 zoomLens.style.top = offsetY + 'px';
                 zoomLens.style.left = offsetX + 'px';
+            },
+            handleMouseEnter: function() {
+                zoomDiv.style.display  = 'inline-block';
+                zoomLens.style.display = 'block';
+            },
+            handleMouseLeave: function() {
+                zoomDiv.style.display  = 'none';
+                zoomLens.style.display = 'none';
             }
         };
 
         container.addEventListener('mousemove', events, false);
+        container.addEventListener('mouseenter', events, false);
+        zoomLens.addEventListener('mouseleave', events, false);
     }
 }));
