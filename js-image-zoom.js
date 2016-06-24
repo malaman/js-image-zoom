@@ -138,5 +138,17 @@
         container.addEventListener('mousemove', events, false);
         container.addEventListener('mouseenter', events, false);
         zoomLens.addEventListener('mouseleave', events, false);
+
+        return {
+            kill: function() {
+                container.removeEventListener('mousemove', events, false);
+                container.removeEventListener('mouseenter', events, false);
+                zoomLens.removeEventListener('mouseleave', events, false);
+                if (zoomLens && zoomDiv) {
+                    container.removeChild(zoomLens);
+                    container.removeChild(zoomDiv);
+                }
+            }
+        }
     }
 }));
