@@ -29,21 +29,6 @@
         var offset;
         var zoomLensWidth;
         var zoomLensHeight;
-        
-        options = options || {};
-        container.style.position = 'absolute';
-        image.style.width = options.width + 'px' || 'auto';
-        image.style.height = options.height + 'px' || 'auto';
-        zoomLens = container.appendChild(lensDiv);
-        zoomLens.style.display = 'none';
-        zoomDiv = container.appendChild(div);
-        zoomDiv.style.width = options.zoomWidth + 'px';
-        zoomDiv.style.height = image.style.height;
-        zoomDiv.style.display = 'inline-block';
-        zoomDiv.style.backgroundImage = 'url(' + image.src + ')';
-        zoomDiv.style.backgroundRepeat = 'no-repeat';
-        zoomDiv.style.display = 'none';
-
 
         function getOffset(el) {
             if (el) {
@@ -56,7 +41,7 @@
         }
 
         function leftLimit(min) {
-            return options.width  - min;
+            return options.width - min;
         }
 
         function topLimit(min) {
@@ -85,26 +70,45 @@
 
         function zoomLensTop(top) {
             const topMin = zoomLensHeight / 2;
-            return getPosition(top, topMin , topLimit(topMin));
+            return getPosition(top, topMin, topLimit(topMin));
         }
 
-        image.onload = function() {
-            originalImgWidth = image.naturalWidth;
-            originalImgHeight = image.naturalHeight;
-            zoomDiv.style.backgroundSize = originalImgWidth + 'px ' + originalImgHeight + 'px';
-            scaleX = originalImgWidth / options.width;
-            scaleY = originalImgHeight / options.height;
-            offset = getOffset(container);
-            zoomLensWidth = options.zoomWidth / scaleX;
-            zoomLensHeight =options.height / scaleY;
-            zoomLens.style.width = zoomLensWidth + 'px';
-            zoomLens.style.height =  zoomLensHeight + 'px';
-            zoomLens.style.position = 'absolute';
-            zoomLens.style.background = 'white';
-            zoomLens.style.opacity = 0.4;
-            zoomLens.pointerEvents = 'none';
+        function setup() {
+            options = options || {};
+            container.style.position = 'absolute';
+            image.style.width = options.width + 'px' || 'auto';
+            image.style.height = options.height + 'px' || 'auto';
+            zoomLens = container.appendChild(lensDiv);
+            zoomLens.style.display = 'none';
+            zoomDiv = container.appendChild(div);
+            zoomDiv.style.width = options.zoomWidth + 'px';
+            zoomDiv.style.height = image.style.height;
+            zoomDiv.style.display = 'inline-block';
+            zoomDiv.style.backgroundImage = 'url(' + image.src + ')';
+            zoomDiv.style.backgroundRepeat = 'no-repeat';
+            zoomDiv.style.display = 'none';
 
-        };
+            image.onload = function () {
+                originalImgWidth = image.naturalWidth;
+                originalImgHeight = image.naturalHeight;
+                zoomDiv.style.backgroundSize = originalImgWidth + 'px ' + originalImgHeight + 'px';
+                scaleX = originalImgWidth / options.width;
+                scaleY = originalImgHeight / options.height;
+                offset = getOffset(container);
+                zoomLensWidth = options.zoomWidth / scaleX;
+                zoomLensHeight = options.height / scaleY;
+                zoomLens.style.width = zoomLensWidth + 'px';
+                zoomLens.style.height = zoomLensHeight + 'px';
+                zoomLens.style.position = 'absolute';
+                zoomLens.style.background = 'white';
+                zoomLens.style.opacity = 0.4;
+                zoomLens.pointerEvents = 'none';
+
+            };
+            container.addEventListener('mousemove', events, false);
+            container.addEventListener('mouseenter', events, false);
+            zoomLens.addEventListener('mouseleave', events, false);
+        }
 
         var events = {
             handleEvent: function(event) {
@@ -134,12 +138,12 @@
                 zoomLens.style.display = 'none';
             }
         };
-
-        container.addEventListener('mousemove', events, false);
-        container.addEventListener('mouseenter', events, false);
-        zoomLens.addEventListener('mouseleave', events, false);
+        setup();
 
         return {
+            setup: function() {
+                setup();
+            },
             kill: function() {
                 container.removeEventListener('mousemove', events, false);
                 container.removeEventListener('mouseenter', events, false);

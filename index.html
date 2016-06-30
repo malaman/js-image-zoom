@@ -4,17 +4,33 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="js-image-zoom.js"></script>
-
+    <style>
+        .control-button {
+            display: block;
+            width: 40px;
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
 <body>
     <div id='container' style="margin-left: 100px">
         <img src="1.jpg" />
     </div>
-    <button onclick="killImageZoom()">kill</button>
+    <button class='control-button' onclick="killImageZoom()">kill</button>
+    <button class='control-button' onclick="setupImageZoom()">setup</button>
+    <button class='control-button' onclick="resetImageZoom()">reset</button>
     <script>
         window.imageZoom = new ImageZoom(document.getElementById('container'), {width: 400, height: 250, zoomWidth: 500});
         function killImageZoom() {
             window.imageZoom.kill();
+        }
+        function setupImageZoom() {
+            window.imageZoom.setup();
+
+        }
+        function resetImageZoom() {
+            window.imageZoom.kill();
+            window.imageZoom.setup();
         }
     </script>
 </body>
