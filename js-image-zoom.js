@@ -59,7 +59,7 @@
         }
 
         function getPosition(v, min, max) {
-            const value = getValue(v, min, max);
+            var value = getValue(v, min, max);
             return value - min;
         }
 
@@ -69,7 +69,7 @@
         }
 
         function zoomLensTop(top) {
-            const topMin = zoomLensHeight / 2;
+            var topMin = zoomLensHeight / 2;
             return getPosition(top, topMin, topLimit(topMin));
         }
 
