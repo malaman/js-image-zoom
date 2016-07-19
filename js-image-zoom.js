@@ -11,13 +11,14 @@
      *          @param {number} width Image width
      *          @param {number} height Image height
      *          @param {number} zoomWidth  Zoomed image width
+     *          @param {string} img Url of image to zoom. If provided container children is ignored
      */
     return function ImageZoom(container, options) {
         "use strict";
         if (!container) {
             return;
         }
-        var image = container.children[0];
+        var image;
         var originalImgWidth;
         var originalImgHeight;
         var div = document.createElement('div');
@@ -74,6 +75,13 @@
         }
 
         function setup() {
+            if (options.img) {
+                var img = document.createElement('img');
+                img.src = options.img;
+                image = container.appendChild(img);
+            } else {
+                image = container.children[0];
+            }
             options = options || {};
             container.style.position = 'absolute';
             image.style.width = options.width + 'px' || 'auto';
@@ -151,6 +159,9 @@
                 if (zoomLens && zoomDiv) {
                     container.removeChild(zoomLens);
                     container.removeChild(zoomDiv);
+                }
+                if (options.img) {
+                    container.removeChild(image);
                 }
             }
         }
