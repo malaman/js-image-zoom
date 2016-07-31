@@ -11,13 +11,14 @@
      *          @param {number} width Image width
      *          @param {number} height Image height
      *          @param {number} zoomWidth  Zoomed image width
+     *          @param {string} img Url of image to zoom. If provided container children is ignored
      */
     return function ImageZoom(container, options) {
         "use strict";
         if (!container) {
             return;
         }
-        var image = container.children[0];
+        var image;
         var originalImgWidth;
         var originalImgHeight;
         var div = document.createElement('div');
@@ -33,9 +34,7 @@
         function getOffset(el) {
             if (el) {
                 var elRect = el.getBoundingClientRect();
-                var scrollX = window.scrollX || window.pageXOffset;
-                var scrollY = window.scrollY || window.pageYOffset;
-                return {left: elRect.left + scrollX, top: elRect.top + scrollY};
+                return {left: elRect.left, top: elRect.top};
             }
             return {left: 0, top: 0};
         }
@@ -74,6 +73,13 @@
         }
 
         function setup() {
+            if (options.img) {
+                var img = document.createElement('img');
+                img.src = options.img;
+                image = container.appendChild(img);
+            } else {
+                image = container.children[0];
+            }
             options = options || {};
             container.style.position = 'absolute';
             image.style.width = options.width + 'px' || 'auto';
@@ -94,7 +100,7 @@
                 zoomDiv.style.backgroundSize = originalImgWidth + 'px ' + originalImgHeight + 'px';
                 scaleX = originalImgWidth / options.width;
                 scaleY = originalImgHeight / options.height;
-                offset = getOffset(container);
+                offset = getOffset(image);
                 zoomLensWidth = options.zoomWidth / scaleX;
                 zoomLensHeight = options.height / scaleY;
                 zoomLens.style.width = zoomLensWidth + 'px';
@@ -108,6 +114,7 @@
             container.addEventListener('mousemove', events, false);
             container.addEventListener('mouseenter', events, false);
             zoomLens.addEventListener('mouseleave', events, false);
+            window.addEventListener('scroll', events, false)
         }
 
         var events = {
@@ -116,18 +123,25 @@
                     case 'mousemove': return this.handleMouseMove(event);
                     case 'mouseenter': return this.handleMouseEnter(event);
                     case 'mouseleave': return this.handleMouseLeave(event);
+                    case 'scroll': return this.handleScroll(event);
                 }
             },
             handleMouseMove: function(event) {
-                var offsetX = zoomLensLeft(event.clientX - offset.left);
-                var offsetY = zoomLensTop(event.clientY - offset.top);
-
-                var backgroundTop = offsetX * scaleX;
-                var backgroundRight = offsetY * scaleY;
-                var backgroundPosition = '-' + backgroundTop + 'px ' +  '-' + backgroundRight + 'px';
-                zoomDiv.style.backgroundPosition = backgroundPosition;
-                zoomLens.style.top = offsetY + 'px';
-                zoomLens.style.left = offsetX + 'px';
+                var offsetX;
+                var offsetY;
+                var backgroundTop;
+                var backgroundRight;
+                var backgroundPosition;
+                if (offset) {
+                    offsetX = zoomLensLeft(event.clientX - offset.left);
+                    offsetY = zoomLensTop(event.clientY - offset.top);
+                    backgroundTop = offsetX * scaleX;
+                    backgroundRight = offsetY * scaleY;
+                    backgroundPosition = '-' + backgroundTop + 'px ' +  '-' + backgroundRight + 'px';
+                    zoomDiv.style.backgroundPosition = backgroundPosition;
+                    zoomLens.style.top = offsetY + 'px';
+                    zoomLens.style.left = offsetX + 'px';
+                }
             },
             handleMouseEnter: function() {
                 zoomDiv.style.display  = 'inline-block';
@@ -136,6 +150,9 @@
             handleMouseLeave: function() {
                 zoomDiv.style.display  = 'none';
                 zoomLens.style.display = 'none';
+            },
+            handleScroll: function() {
+                offset = getOffset(image);
             }
         };
         setup();
@@ -151,6 +168,9 @@
                 if (zoomLens && zoomDiv) {
                     container.removeChild(zoomLens);
                     container.removeChild(zoomDiv);
+                }
+                if (options.img) {
+                    container.removeChild(image);
                 }
             }
         }
