@@ -164,6 +164,7 @@
             kill: function() {
                 container.removeEventListener('mousemove', events, false);
                 container.removeEventListener('mouseenter', events, false);
+                container.removeEventListener('mouseleave', events, false);
                 zoomLens.removeEventListener('mouseleave', events, false);
                 if (zoomLens && zoomDiv) {
                     container.removeChild(zoomLens);
