@@ -113,6 +113,7 @@
             };
             container.addEventListener('mousemove', events, false);
             container.addEventListener('mouseenter', events, false);
+            container.addEventListener('mouseleave', events, false);
             zoomLens.addEventListener('mouseleave', events, false);
             window.addEventListener('scroll', events, false)
         }
@@ -139,8 +140,7 @@
                     backgroundRight = offsetY * scaleY;
                     backgroundPosition = '-' + backgroundTop + 'px ' +  '-' + backgroundRight + 'px';
                     zoomDiv.style.backgroundPosition = backgroundPosition;
-                    zoomLens.style.top = offsetY + 'px';
-                    zoomLens.style.left = offsetX + 'px';
+                    zoomLens.style.cssText = zoomLens.style.cssText + 'top:' + offsetY + 'px;' + 'left:' + offsetX + 'px;';
                 }
             },
             handleMouseEnter: function() {
