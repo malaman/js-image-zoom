@@ -12,6 +12,8 @@
      *          @param {number} height Image height
      *          @param {number} zoomWidth  Zoomed image width
      *          @param {string} img Url of image to zoom. If provided container children is ignored
+     *          @param {number} scale Zoom scale. If provided zoomWidth param is ignored
+     *          @param {object} offset {vertical, horizontal} offset in pixels between original image and zoomed image
      */
     return function ImageZoom(container, options) {
         "use strict";
@@ -30,6 +32,7 @@
         var offset;
         var zoomLensWidth;
         var zoomLensHeight;
+        var zoomedImageOffset = options.offset || {vertical: 0, horizontal: 0};
 
         function getOffset(el) {
             if (el) {
@@ -87,9 +90,16 @@
             zoomLens = container.appendChild(lensDiv);
             zoomLens.style.display = 'none';
             zoomDiv = container.appendChild(div);
-            zoomDiv.style.width = options.zoomWidth + 'px';
-            zoomDiv.style.height = image.style.height;
-            zoomDiv.style.display = 'inline-block';
+            if (options.scale) {
+                zoomDiv.style.width = options.width * options.scale + 'px';
+                zoomDiv.style.height = options.height * options.scale + 'px';
+            } else {
+                zoomDiv.style.width = options.zoomWidth + 'px';
+                zoomDiv.style.height = image.style.height;
+            }
+            zoomDiv.style.position = 'absolute';
+            zoomDiv.style.top = zoomedImageOffset.vertical + 'px';
+            zoomDiv.style.left = options.width + zoomedImageOffset.horizontal + 'px';
             zoomDiv.style.backgroundImage = 'url(' + image.src + ')';
             zoomDiv.style.backgroundRepeat = 'no-repeat';
             zoomDiv.style.display = 'none';
@@ -101,8 +111,14 @@
                 scaleX = originalImgWidth / options.width;
                 scaleY = originalImgHeight / options.height;
                 offset = getOffset(image);
-                zoomLensWidth = options.zoomWidth / scaleX;
-                zoomLensHeight = options.height / scaleY;
+                if (options.scale) {
+                    zoomLensWidth = options.width / (originalImgWidth / (options.width * options.scale));
+                    zoomLensHeight = options.height / (originalImgHeight / (options.height * options.scale));
+                } else {
+                    zoomLensWidth = options.zoomWidth / scaleX;
+                    zoomLensHeight = options.height / scaleY;
+                }
+
                 zoomLens.style.width = zoomLensWidth + 'px';
                 zoomLens.style.height = zoomLensHeight + 'px';
                 zoomLens.style.position = 'absolute';
@@ -144,7 +160,7 @@
                 }
             },
             handleMouseEnter: function() {
-                zoomDiv.style.display  = 'inline-block';
+                zoomDiv.style.display  = 'block';
                 zoomLens.style.display = 'block';
             },
             handleMouseLeave: function() {

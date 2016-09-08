@@ -35,12 +35,13 @@
     <button class='control-button' onclick="resetImageZoom('imageZoom2')">reset</button>
 </div>
 <script>
-    window.imageZoom = new ImageZoom(document.getElementById('container'), {width: 400, height: 250, zoomWidth: 500});
+    window.imageZoom = new ImageZoom(document.getElementById('container'), {width: 400, height: 250, zoomWidth: 500, scale: 2, offset: {vertical: 0, horizontal: 10}});
     window.imageZoom2 = new ImageZoom(document.getElementById('containerWithoutChild'), {
         width: 400,
         height: 250,
         zoomWidth: 500,
-        img: "1.jpg"
+        img: "1.jpg",
+        offset: {vertical: 0, horizontal: 10}
     });
 
     function killImageZoom(imageZoom) {
