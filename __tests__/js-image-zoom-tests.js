@@ -1,5 +1,5 @@
 test('check that setup function returns HTMLElement for sourceImg, zoomedImg and zoomLens', () => {
-    const ImageZoom = require('../js-image-zoom');
+    const ImageZoom = require('../package/js-image-zoom');
     document.body.innerHTML =
         '<div>' +
         '  <div id="container">' +
