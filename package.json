@@ -1,6 +1,7 @@
 {
-  "name": "js-image-zoom",
-  "version": "0.0.1",
+  "name": "js-image-zoom-repo",
+  "private": true,
+  "version": "0.0.2",
   "main": "js-image-zoom.js",
   "repository": {
     "type": "git",
