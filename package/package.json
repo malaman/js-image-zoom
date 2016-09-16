@@ -1,6 +1,5 @@
 {
-  "name": "js-image-zoom-repo",
-  "private": true,
+  "name": "js-image-zoom",
   "version": "0.0.2",
   "main": "js-image-zoom.js",
   "repository": {
@@ -9,13 +8,8 @@
   },
   "license": "MIT",
   "dependencies": {},
-  "devDependencies": {
-    "jest-cli": "^15.1.1"
-  },
+  "devDependencies": {},
   "engines": {
     "node": ">=0.8.0"
-  },
-  "scripts": {
-    "test": "jest"
   }
 }
