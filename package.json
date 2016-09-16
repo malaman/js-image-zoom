@@ -8,8 +8,13 @@
   },
   "license": "MIT",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "jest-cli": "^15.1.1"
+  },
   "engines": {
     "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }

@@ -20,9 +20,30 @@
         if (!container) {
             return;
         }
-        var image;
-        var originalImgWidth;
-        var originalImgHeight;
+        var data = {
+            sourceImg: {
+                element: null,
+                width: 0,
+                height: 0,
+                naturalWidth: 0,
+                naturalHeight: 0
+            },
+            zoomedImgOffset: {
+                vertical: 0,
+                horizontal: 0
+            },
+            zoomedImg: {
+                element: null,
+                width: 0,
+                height: 0
+            },
+            zoomLens: {
+                element: null,
+                width: 0,
+                height: 0
+            }
+        };
+
         var div = document.createElement('div');
         var lensDiv = document.createElement('div');
         var zoomDiv;
@@ -30,9 +51,7 @@
         var scaleX;
         var scaleY;
         var offset;
-        var zoomLensWidth;
-        var zoomLensHeight;
-        var zoomedImageOffset = options.offset || {vertical: 0, horizontal: 0};
+        data.zoomedImgOffset = options.offset || {vertical: 0, horizontal: 0};
 
         function getOffset(el) {
             if (el) {
@@ -66,12 +85,12 @@
         }
 
         function zoomLensLeft(left) {
-            var leftMin = zoomLensWidth / 2;
+            var leftMin = data.zoomLens.width / 2;
             return getPosition(left, leftMin, leftLimit(leftMin));
         }
 
         function zoomLensTop(top) {
-            var topMin = zoomLensHeight / 2;
+            var topMin = data.zoomLens.height / 2;
             return getPosition(top, topMin, topLimit(topMin));
         }
 
@@ -79,59 +98,62 @@
             if (options.img) {
                 var img = document.createElement('img');
                 img.src = options.img;
-                image = container.appendChild(img);
+                data.sourceImg.element = container.appendChild(img);
             } else {
-                image = container.children[0];
+                data.sourceImg.element = container.children[0];
             }
             options = options || {};
             container.style.position = 'absolute';
-            image.style.width = options.width + 'px' || 'auto';
-            image.style.height = options.height + 'px' || 'auto';
-            zoomLens = container.appendChild(lensDiv);
-            zoomLens.style.display = 'none';
-            zoomDiv = container.appendChild(div);
+            data.sourceImg.element.style.width = options.width + 'px' || 'auto';
+            data.sourceImg.element.style.height = options.height + 'px' || 'auto';
+
+            data.zoomLens.element = container.appendChild(lensDiv);
+            data.zoomLens.element.style.display = 'none';
+            data.zoomedImg.element = container.appendChild(div);
             if (options.scale) {
-                zoomDiv.style.width = options.width * options.scale + 'px';
-                zoomDiv.style.height = options.height * options.scale + 'px';
+                data.zoomedImg.element.style.width = options.width * options.scale + 'px';
+                data.zoomedImg.element.style.height = options.height * options.scale + 'px';
             } else {
-                zoomDiv.style.width = options.zoomWidth + 'px';
-                zoomDiv.style.height = image.style.height;
+                data.zoomedImg.element.style.width = options.zoomWidth + 'px';
+                data.zoomedImg.element.style.height = data.sourceImg.element.style.height;
             }
-            zoomDiv.style.position = 'absolute';
-            zoomDiv.style.top = zoomedImageOffset.vertical + 'px';
-            zoomDiv.style.left = options.width + zoomedImageOffset.horizontal + 'px';
-            zoomDiv.style.backgroundImage = 'url(' + image.src + ')';
-            zoomDiv.style.backgroundRepeat = 'no-repeat';
-            zoomDiv.style.display = 'none';
+            data.zoomedImg.element.style.position = 'absolute';
+            data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical + 'px';
+            data.zoomedImg.element.style.left = options.width + data.zoomedImgOffset.horizontal + 'px';
+            data.zoomedImg.element.style.backgroundImage = 'url(' + data.sourceImg.element.src + ')';
+            data.zoomedImg.element.style.backgroundRepeat = 'no-repeat';
+            data.zoomedImg.element.style.display = 'none';
 
-            image.onload = function () {
-                originalImgWidth = image.naturalWidth;
-                originalImgHeight = image.naturalHeight;
-                zoomDiv.style.backgroundSize = originalImgWidth + 'px ' + originalImgHeight + 'px';
-                scaleX = originalImgWidth / options.width;
-                scaleY = originalImgHeight / options.height;
-                offset = getOffset(image);
+
+            data.sourceImg.element.onload = function () {
+                data.sourceImg.naturalWidth = data.sourceImg.element.naturalWidth;
+                data.sourceImg.naturalHeight = data.sourceImg.element.naturalHeight;
+                data.zoomedImg.element.style.backgroundSize = data.sourceImg.naturalWidth + 'px ' + data.sourceImg.naturalHeight + 'px';
+                scaleX = data.sourceImg.naturalWidth / options.width;
+                scaleY = data.sourceImg.naturalHeight / options.height;
+                offset = getOffset(data.sourceImg.element);
+
                 if (options.scale) {
-                    zoomLensWidth = options.width / (originalImgWidth / (options.width * options.scale));
-                    zoomLensHeight = options.height / (originalImgHeight / (options.height * options.scale));
+                    data.zoomLens.width = options.width / (data.sourceImg.naturalWidth / (options.width * options.scale));
+                    data.zoomLens.height = options.height / (data.sourceImg.naturalHeight / (options.height * options.scale));
                 } else {
-                    zoomLensWidth = options.zoomWidth / scaleX;
-                    zoomLensHeight = options.height / scaleY;
+                    data.zoomLens.width = options.zoomWidth / scaleX;
+                    data.zoomLens.height = options.height / scaleY;
                 }
-
-                zoomLens.style.width = zoomLensWidth + 'px';
-                zoomLens.style.height = zoomLensHeight + 'px';
-                zoomLens.style.position = 'absolute';
-                zoomLens.style.background = 'white';
-                zoomLens.style.opacity = 0.4;
-                zoomLens.pointerEvents = 'none';
+                data.zoomLens.element.style.width = data.zoomLens.width + 'px';
+                data.zoomLens.element.style.height = data.zoomLens.height + 'px';
+                data.zoomLens.element.style.position = 'absolute';
+                data.zoomLens.element.style.background = 'white';
+                data.zoomLens.element.style.opacity = 0.4;
+                data.zoomLens.element.pointerEvents = 'none';
 
             };
             container.addEventListener('mousemove', events, false);
             container.addEventListener('mouseenter', events, false);
             container.addEventListener('mouseleave', events, false);
-            zoomLens.addEventListener('mouseleave', events, false);
-            window.addEventListener('scroll', events, false)
+            data.zoomLens.element.addEventListener('mouseleave', events, false);
+            window.addEventListener('scroll', events, false);
+            return data;
         }
 
         var events = {
@@ -155,20 +177,24 @@
                     backgroundTop = offsetX * scaleX;
                     backgroundRight = offsetY * scaleY;
                     backgroundPosition = '-' + backgroundTop + 'px ' +  '-' + backgroundRight + 'px';
-                    zoomDiv.style.backgroundPosition = backgroundPosition;
-                    zoomLens.style.cssText = zoomLens.style.cssText + 'top:' + offsetY + 'px;' + 'left:' + offsetX + 'px;';
+                    data.zoomedImg.element.style.backgroundPosition = backgroundPosition;
+                    data.zoomLens.element.style.cssText = data.zoomLens.element.style.cssText + 'top:' + offsetY + 'px;' + 'left:' + offsetX + 'px;';
+
                 }
             },
             handleMouseEnter: function() {
-                zoomDiv.style.display  = 'block';
-                zoomLens.style.display = 'block';
+                data.zoomedImg.element.style.display  = 'block';
+                data.zoomLens.element.style.display = 'block';
+
             },
             handleMouseLeave: function() {
-                zoomDiv.style.display  = 'none';
-                zoomLens.style.display = 'none';
+                data.zoomedImg.element.style.display  = 'none';
+                data.zoomLens.element.style.display = 'none';
+
+
             },
             handleScroll: function() {
-                offset = getOffset(image);
+                offset = getOffset(data.sourceImg.element);
             }
         };
         setup();
@@ -181,13 +207,20 @@
                 container.removeEventListener('mousemove', events, false);
                 container.removeEventListener('mouseenter', events, false);
                 container.removeEventListener('mouseleave', events, false);
-                zoomLens.removeEventListener('mouseleave', events, false);
+                data.zoomLens.element.removeEventListener('mouseleave', events, false);
+
+                data.zoomLens.element.removeEventListener('mouseleave', events, false);
                 if (zoomLens && zoomDiv) {
-                    container.removeChild(zoomLens);
-                    container.removeChild(zoomDiv);
+                    container.removeChild(data.zoomLens.element);
+                    container.removeChild(data.zoomedImg.element);
                 }
                 if (options.img) {
-                    container.removeChild(image);
+                    container.removeChild(data.sourceImg.element);
+                }
+            },
+            _getPrivateFunctions: function() {
+                return {
+                    setup: setup
                 }
             }
         }
