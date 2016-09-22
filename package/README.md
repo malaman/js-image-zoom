@@ -7,7 +7,7 @@ Pure JavaScript utility for desktop browsers for image zoom on mouse hover. No e
 
 ##Demo
 
-[Demo](http://malaman.github.io/js-image-zoom/)
+[Demo](http://malaman.github.io/js-image-zoom/example)
 
 ##Arguments
 
