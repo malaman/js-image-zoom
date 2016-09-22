@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF8">
+    <title>Title</title>
+    <script src="../package/js-image-zoom.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <style>
+        .wrapper {
+            min-height: 400px;
+            margin-left: 10px;
+        }
+        .imageblock {
+            margin-left: 120px;
+        }
+        .settings {
+            max-width: 100px;
+        }
+
+        .settings__button {
+            display: block;
+            width: 100px;
+            margin-bottom: 5px;
+        }
+        .setting__inputset {
+            width: 100px;
+        }
+        .setting__inputset__fieldset {
+            border: 0;
+            margin-top: -15px;
+
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <h4 id="zoomOptions"></h4>
+    <div class="imageblock">
+        <div id='container'>
+        </div>
+    </div>
+    <div class="settings">
+        <button class='pure-button settings__button' onclick="killImageZoom('imageZoom')">kill</button>
+        <button class='pure-button settings__button' onclick="setupImageZoom('imageZoom')">setup</button>
+        <button class='pure-button settings__button' onclick="resetImageZoom('imageZoom')">reset</button>
+        <p>Scale:</p>
+        <form class="setting__inputset">
+            <fieldset class="setting__inputset__fieldset" onclick="changeScale()">
+                <input type="radio" id="default" name="Scale" value="0" checked="checked">
+                <label for="default"> Default</label><br>
+                <input type="radio" id="scale_1.5" name="Scale" value="1.5">
+                <label for="scale_1.5"> 1.5</label><br>
+                <input type="radio" id="scale_1.8" name="Scale" value="1.8">
+                <label for="scale_1.8"> 1.8</label><br>
+                <input type="radio" id="scale_2" name="Scale" value="2">
+                <label for="scale_2"> 2.0</label><br>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script>
+    var options = {
+        width: 400,
+        height: 250,
+        zoomWidth: 500,
+        img: "1.jpg",
+        offset: {vertical: 0, horizontal: 10}
+    };
+    const container = document.getElementById('container');
+    const optionsHeader = document.getElementById('zoomOptions');
+    optionsHeader.innerHTML = 'Options: ' + JSON.stringify(options);
+    window.imageZoom = new ImageZoom(container, options);
+
+    function killImageZoom(imageZoom) {
+        window[imageZoom].kill();
+    }
+    function setupImageZoom(imageZoom) {
+        window[imageZoom].setup();
+
+    }
+    function resetImageZoom(imageZoom) {
+        window[imageZoom].kill();
+        window[imageZoom].setup();
+    }
+    function changeScale() {
+        var scale = document.querySelector('input[name = "Scale"]:checked').value;
+        if (scale > 0) {
+            options.scale = scale;
+        } else {
+            delete options.scale;
+        }
+        optionsHeader.innerHTML = 'Options: ' + JSON.stringify(options);
+        killImageZoom('imageZoom');
+        window.imageZoom = new ImageZoom(container, options);
+    }
+</script>
+</body>
+</html>
