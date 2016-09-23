@@ -4,56 +4,114 @@
     <meta charset="UTF8">
     <title>Title</title>
     <script src="../package/js-image-zoom.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <style>
         .wrapper {
             min-height: 400px;
+            margin-left: 10px;
+        }
+        .imageblock {
+            margin-left: 120px;
+        }
+        .settings {
+            max-width: 100px;
         }
 
-        .control-button {
+        .settings__button {
             display: block;
-            width: 50px;
+            width: 100px;
             margin-bottom: 5px;
+        }
+        .setting__inputset {
+            width: 100px;
+        }
+        .setting__inputset__fieldset {
+            border: 0;
+            margin-top: -15px;
+
         }
     </style>
 </head>
 <body>
 <div class="wrapper">
-    <h2>Zoom image with nested img</h2>
-    <div id='container' style="margin-left: 100px">
-        <img src="1.jpg"/>
+    <h4 id="zoomOptions"></h4>
+    <div class="imageblock">
+        <div id='container'>
+        </div>
     </div>
-    <button class='control-button' onclick="killImageZoom('imageZoom')">kill</button>
-    <button class='control-button' onclick="setupImageZoom('imageZoom')">setup</button>
-    <button class='control-button' onclick="resetImageZoom('imageZoom')">reset</button>
-</div>
-<div class="wrapper">
-    <h2>Zoom image with img as option</h2>
-    <div id='containerWithoutChild' style="margin-left: 100px">
+    <div class="settings">
+        <button id='kill' class='pure-button settings__button' onclick="killImageZoom('imageZoom')">kill</button>
+        <button id='setup' class='pure-button settings__button' onclick="setupImageZoom('imageZoom')" disabled>setup</button>
+        <button id='reset' class='pure-button settings__button' onclick="resetImageZoom('imageZoom')">reset</button>
+        <p>Scale:</p>
+        <form class="setting__inputset">
+            <fieldset class="setting__inputset__fieldset" onclick="changeScale()">
+                <input type="radio" id="default" name="Scale" value="0" checked="checked">
+                <label for="default"> Default</label><br>
+                <input type="radio" id="scale_1.5" name="Scale" value="1.5">
+                <label for="scale_1.5"> 1.5</label><br>
+                <input type="radio" id="scale_1.8" name="Scale" value="1.8">
+                <label for="scale_1.8"> 1.8</label><br>
+                <input type="radio" id="scale_2" name="Scale" value="2">
+                <label for="scale_2"> 2.0</label><br>
+            </fieldset>
+        </form>
     </div>
-    <button class='control-button' onclick="killImageZoom('imageZoom2')">kill</button>
-    <button class='control-button' onclick="setupImageZoom('imageZoom2')">setup</button>
-    <button class='control-button' onclick="resetImageZoom('imageZoom2')">reset</button>
 </div>
 <script>
-    window.imageZoom = new ImageZoom(document.getElementById('container'), {width: 400, height: 250, zoomWidth: 500, scale: 2, offset: {vertical: 0, horizontal: 10}});
-    window.imageZoom2 = new ImageZoom(document.getElementById('containerWithoutChild'), {
+    var options = {
         width: 400,
         height: 250,
         zoomWidth: 500,
         img: "1.jpg",
         offset: {vertical: 0, horizontal: 10}
-    });
+    };
+    var container = document.getElementById('container');
+    var optionsHeader = document.getElementById('zoomOptions');
+    var killButton = document.getElementById('kill');
+    var setupButton = document.getElementById('setup');
+    var resetButton = document.getElementById('reset');
+    optionsHeader.innerHTML = 'Options: ' + JSON.stringify(options);
+    window.imageZoom = new ImageZoom(container, options);
+
+    function updateButtonStatus() {
+        if (window.imageZoom) {
+            killButton.disabled = false;
+            resetButton.disabled = false;
+            setupButton.disabled = true;
+        } else {
+            killButton.disabled = true;
+            resetButton.disabled = true;
+            setupButton.disabled = false;
+        }
+
+    }
 
     function killImageZoom(imageZoom) {
         window[imageZoom].kill();
+        delete window[imageZoom];
+        updateButtonStatus();
     }
     function setupImageZoom(imageZoom) {
-        window[imageZoom].setup();
+        window[imageZoom]= new ImageZoom(container, options);
+        updateButtonStatus();
 
     }
     function resetImageZoom(imageZoom) {
         window[imageZoom].kill();
         window[imageZoom].setup();
+    }
+    function changeScale() {
+        var scale = document.querySelector('input[name = "Scale"]:checked').value;
+        if (scale > 0) {
+            options.scale = scale;
+        } else {
+            delete options.scale;
+        }
+        optionsHeader.innerHTML = 'Options: ' + JSON.stringify(options);
+        killImageZoom('imageZoom');
+        window.imageZoom = new ImageZoom(container, options);
+        updateButtonStatus();
     }
 </script>
 </body>
