@@ -1,6 +1,6 @@
 {
   "name": "js-image-zoom",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "main": "js-image-zoom.js",
   "repository": {
     "type": "git",
@@ -11,5 +11,14 @@
   "devDependencies": {},
   "engines": {
     "node": ">=0.8.0"
-  }
+  },
+  "description": "",
+  "bugs": {
+    "url": "https://github.com/malaman/js-image-zoom/issues"
+  },
+  "homepage": "https://github.com/malaman/js-image-zoom#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andrii Malaman <and.malaman@gmail.com>"
 }
