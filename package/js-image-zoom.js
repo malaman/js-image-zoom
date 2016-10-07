@@ -151,6 +151,7 @@
             container.addEventListener('mousemove', events, false);
             container.addEventListener('mouseenter', events, false);
             container.addEventListener('mouseleave', events, false);
+            data.zoomLens.element.addEventListener('mouseenter', events, false);
             data.zoomLens.element.addEventListener('mouseleave', events, false);
             window.addEventListener('scroll', events, false);
             return data;
@@ -178,7 +179,8 @@
                     backgroundRight = offsetY * scaleY;
                     backgroundPosition = '-' + backgroundTop + 'px ' +  '-' + backgroundRight + 'px';
                     data.zoomedImg.element.style.backgroundPosition = backgroundPosition;
-                    data.zoomLens.element.style.cssText = data.zoomLens.element.style.cssText + 'top:' + offsetY + 'px;' + 'left:' + offsetX + 'px;';
+                    data.zoomedImg.element.style.display  = 'block';
+                    data.zoomLens.element.style.cssText = data.zoomLens.element.style.cssText + 'top:' + offsetY + 'px;' + 'left:' + offsetX + 'px;display: block;';
 
                 }
             },
@@ -207,9 +209,9 @@
                 container.removeEventListener('mousemove', events, false);
                 container.removeEventListener('mouseenter', events, false);
                 container.removeEventListener('mouseleave', events, false);
+                data.zoomLens.element.removeEventListener('mouseenter', events, false);
                 data.zoomLens.element.removeEventListener('mouseleave', events, false);
-
-                data.zoomLens.element.removeEventListener('mouseleave', events, false);
+                window.removeEventListener('scroll', events, false);
                 if (zoomLens && zoomDiv) {
                     container.removeChild(data.zoomLens.element);
                     container.removeChild(data.zoomedImg.element);
