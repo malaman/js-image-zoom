@@ -6,14 +6,14 @@
     }
 }(this, function () {
     /**
-     * @param {Object} container DOM element, which contains an image to be zoomed
-     * @param {Object} options js-image-zoom options
-     *          @param {number} width Image width
-     *          @param {number} height Image height
-     *          @param {number} zoomWidth  Zoomed image width
-     *          @param {string} img Url of image to zoom. If provided container children is ignored
-     *          @param {number} scale Zoom scale. If provided zoomWidth param is ignored
-     *          @param {object} offset {vertical, horizontal} offset in pixels between original image and zoomed image
+     * @param {Object} container DOM element, which contains an image to be zoomed (required)
+     * @param {Object} options js-image-zoom options (required)
+     *          @param {number} width Image width (required)
+     *          @param {number} height Image height (required)
+     *          @param {number} zoomWidth  Zoomed image width optional if scale param is provided
+     *          @param {string} img Url of image to zoom. If provided container children is ignored (optional)
+     *          @param {number} scale Zoom scale. If provided zoomWidth param is ignored (optional if zoomWidth param is provided)
+     *          @param {object} offset {vertical, horizontal} offset in pixels between original image and zoomed image (optional)
      */
     return function ImageZoom(container, options) {
         "use strict";
@@ -179,7 +179,6 @@
                     backgroundRight = offsetY * scaleY;
                     backgroundPosition = '-' + backgroundTop + 'px ' +  '-' + backgroundRight + 'px';
                     data.zoomedImg.element.style.backgroundPosition = backgroundPosition;
-                    data.zoomedImg.element.style.display  = 'block';
                     data.zoomLens.element.style.cssText = data.zoomLens.element.style.cssText + 'top:' + offsetY + 'px;' + 'left:' + offsetX + 'px;display: block;';
 
                 }
