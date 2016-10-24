@@ -17,6 +17,28 @@
     "url": "https://github.com/malaman/js-image-zoom/issues"
   },
   "homepage": "https://github.com/malaman/js-image-zoom#readme",
+  "keywords": [
+    "react-image-zoom",
+    "image magnifier",
+    "image enlarger",
+    "image lens",
+    "photo zoom",
+    "photo magnifier",
+    "photo enlarger",
+    "photo lens",
+    "react zoom",
+    "react magnify",
+    "react lens",
+    "image zoom",
+    "image magnifier",
+    "image enlarger",
+    "photo zoom",
+    "photo magnifier",
+    "photo enlarger",
+    "zoom",
+    "magnify",
+    "enlarge"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
