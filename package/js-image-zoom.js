@@ -157,6 +157,23 @@
             return data;
         }
 
+        function kill() {
+            container.removeEventListener('mousemove', events, false);
+            container.removeEventListener('mouseenter', events, false);
+            container.removeEventListener('mouseleave', events, false);
+            data.zoomLens.element.removeEventListener('mouseenter', events, false);
+            data.zoomLens.element.removeEventListener('mouseleave', events, false);
+            window.removeEventListener('scroll', events, false);
+            if (zoomLens && zoomDiv) {
+                container.removeChild(data.zoomLens.element);
+                container.removeChild(data.zoomedImg.element);
+            }
+            if (options.img) {
+                container.removeChild(data.sourceImg.element);
+            }
+            return data;
+        }
+
         var events = {
             handleEvent: function(event) {
                 switch(event.type) {
@@ -191,8 +208,6 @@
             handleMouseLeave: function() {
                 data.zoomedImg.element.style.display  = 'none';
                 data.zoomLens.element.style.display = 'none';
-
-
             },
             handleScroll: function() {
                 offset = getOffset(data.sourceImg.element);
@@ -205,23 +220,12 @@
                 setup();
             },
             kill: function() {
-                container.removeEventListener('mousemove', events, false);
-                container.removeEventListener('mouseenter', events, false);
-                container.removeEventListener('mouseleave', events, false);
-                data.zoomLens.element.removeEventListener('mouseenter', events, false);
-                data.zoomLens.element.removeEventListener('mouseleave', events, false);
-                window.removeEventListener('scroll', events, false);
-                if (zoomLens && zoomDiv) {
-                    container.removeChild(data.zoomLens.element);
-                    container.removeChild(data.zoomedImg.element);
-                }
-                if (options.img) {
-                    container.removeChild(data.sourceImg.element);
-                }
+                kill();
             },
             _getPrivateFunctions: function() {
                 return {
-                    setup: setup
+                    setup: setup,
+                    kill: kill
                 }
             }
         }
