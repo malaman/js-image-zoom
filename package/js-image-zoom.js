@@ -14,6 +14,7 @@
      *          @param {string} img Url of image to zoom. If provided container children is ignored (optional)
      *          @param {number} scale Zoom scale. If provided zoomWidth param is ignored (optional if zoomWidth param is provided)
      *          @param {object} offset {vertical, horizontal} offset in pixels between original image and zoomed image (optional)
+     *          @param {string} zoomStyle custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
      */
     return function ImageZoom(container, options) {
         "use strict";
@@ -129,6 +130,9 @@
                 data.sourceImg.naturalWidth = data.sourceImg.element.naturalWidth;
                 data.sourceImg.naturalHeight = data.sourceImg.element.naturalHeight;
                 data.zoomedImg.element.style.backgroundSize = data.sourceImg.naturalWidth + 'px ' + data.sourceImg.naturalHeight + 'px';
+                if (options.zoomStyle) {
+                    data.zoomedImg.element.style.cssText +=  options.zoomStyle;
+                }
                 scaleX = data.sourceImg.naturalWidth / options.width;
                 scaleY = data.sourceImg.naturalHeight / options.height;
                 offset = getOffset(data.sourceImg.element);
@@ -196,7 +200,7 @@
                     backgroundRight = offsetY * scaleY;
                     backgroundPosition = '-' + backgroundTop + 'px ' +  '-' + backgroundRight + 'px';
                     data.zoomedImg.element.style.backgroundPosition = backgroundPosition;
-                    data.zoomLens.element.style.cssText = data.zoomLens.element.style.cssText + 'top:' + offsetY + 'px;' + 'left:' + offsetX + 'px;display: block;';
+                    data.zoomLens.element.style.cssText += 'top:' + offsetY + 'px;' + 'left:' + offsetX + 'px;display: block;';
 
                 }
             },

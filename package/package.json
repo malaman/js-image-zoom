@@ -1,6 +1,6 @@
 {
   "name": "js-image-zoom",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "main": "js-image-zoom.js",
   "repository": {
     "type": "git",
@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/malaman/js-image-zoom#readme",
   "keywords": [
-    "react-image-zoom",
     "image magnifier",
     "image enlarger",
     "image lens",
@@ -26,9 +25,6 @@
     "photo magnifier",
     "photo enlarger",
     "photo lens",
-    "react zoom",
-    "react magnify",
-    "react lens",
     "image zoom",
     "image magnifier",
     "image enlarger",

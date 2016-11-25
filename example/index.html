@@ -11,15 +11,15 @@
             margin-left: 10px;
         }
         .imageblock {
-            margin-left: 120px;
+            margin-left: 140px;
         }
         .settings {
-            max-width: 100px;
+            max-width: 130px;
         }
 
         .settings__button {
             display: block;
-            width: 100px;
+            width: 120px;
             margin-bottom: 5px;
         }
         .setting__inputset {
@@ -28,7 +28,6 @@
         .setting__inputset__fieldset {
             border: 0;
             margin-top: -15px;
-
         }
     </style>
 </head>
@@ -43,6 +42,7 @@
         <button id='kill' class='pure-button settings__button' onclick="killImageZoom('imageZoom')">kill</button>
         <button id='setup' class='pure-button settings__button' onclick="setupImageZoom('imageZoom')" disabled>setup</button>
         <button id='reset' class='pure-button settings__button' onclick="resetImageZoom('imageZoom')">reset</button>
+        <button id='change' class='pure-button settings__button' onclick="changeImage('imageZoom')">change image</button>
         <p>Scale:</p>
         <form class="setting__inputset">
             <fieldset class="setting__inputset__fieldset" onclick="changeScale()">
@@ -59,6 +59,7 @@
     </div>
 </div>
 <script>
+    var currentImage = 1;
     var options = {
         width: 400,
         height: 250,
@@ -113,6 +114,11 @@
         window.imageZoom = new ImageZoom(container, options);
         updateButtonStatus();
     }
+    function changeImage(imageZoom) {
+        currentImage = currentImage === 1 ? 2 : 1;
+        options.img = currentImage + '.jpg';
+        resetImageZoom(imageZoom);
+    };
 </script>
 </body>
 </html>

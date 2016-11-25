@@ -31,6 +31,13 @@ describe('js-image-zoom tests', () => {
         expect(setupData.zoomedImg.element).toEqual(jasmine.any(HTMLDivElement));
         expect(setupData.zoomLens.element).toEqual(jasmine.any(HTMLDivElement));
     });
+    it('check creation of elements with width, height, zoomWidth, img, scale, offset, style', () => {
+        const imageZoom = new ImageZoom(document.getElementById('container'), {width: 400, height: 250, scale: 1.5, img: "../1.jpg", offset: {vertical: 0, horizontal: 10}, zoomStyle: "opacity:0.1;"});
+        const setupData = imageZoom._getPrivateFunctions().setup();
+        expect(setupData.sourceImg.element).toEqual(jasmine.any(HTMLImageElement));
+        expect(setupData.zoomedImg.element).toEqual(jasmine.any(HTMLDivElement));
+        expect(setupData.zoomLens.element).toEqual(jasmine.any(HTMLDivElement));
+    });
 
     it('check kill method ', () => {
         const imageZoom = new ImageZoom(document.getElementById('container'), {width: 0, height: 250, scale: 1.5, img: "../1.jpg", offset: {vertical: 0, horizontal: 10}});

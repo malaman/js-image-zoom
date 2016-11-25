@@ -19,6 +19,7 @@ Pure JavaScript utility for desktop browsers for image zoom on mouse hover. No e
     * **img** (string) - url of the source image. Provided if container does not contain img element as a tag(optional)    
     * **scale** (number) - zoom scale. if not provided, scale is calculated as natural image size / image size, provided in params (optional if zoomWidth param is provided)
     * **offset** (object) - {vertical: number, horizontal: number}. Zoomed image offset (optional)
+    * **zoomStyle** (string) - custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
 
 ##RouteMap
 
