@@ -1,5 +1,6 @@
 #js-image-zoom
 
+[![NPM Download Stats](https://nodei.co/npm/js-image-zoom.png?downloads=true)](https://www.npmjs.com/package/js-image-zoom)
 
 ##Overview
 
