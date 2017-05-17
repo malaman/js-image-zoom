@@ -1,16 +1,16 @@
-#js-image-zoom
+# js-image-zoom
 
 [![NPM Download Stats](https://nodei.co/npm/js-image-zoom.png?downloads=true)](https://www.npmjs.com/package/js-image-zoom)
 
-##Overview
+## Overview
 
 Pure JavaScript utility for desktop browsers for image zoom on mouse hover. No external dependencies required.
 
-##Demo
+## Demo
 
 [Demo](http://malaman.github.io/js-image-zoom/example)
 
-##Arguments
+## Arguments
 
 - **container** (Object) - DOM element, which contains an source image
 - **options** (Object) - js-image-zoom options
@@ -22,6 +22,6 @@ Pure JavaScript utility for desktop browsers for image zoom on mouse hover. No e
     * **offset** (object) - {vertical: number, horizontal: number}. Zoomed image offset (optional)
     * **zoomStyle** (string) - custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
 
-##RouteMap
+## RouteMap
 
 - [ ] extend testing coverage
