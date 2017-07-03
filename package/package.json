@@ -1,6 +1,6 @@
 {
   "name": "js-image-zoom",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "main": "js-image-zoom.js",
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/malaman/js-image-zoom/issues"
   },
-  "homepage": "https://github.com/malaman/js-image-zoom#readme",
+  "homepage": "https://github.com/malaman/js-image-zoom/package/#readme",
   "keywords": [
     "image magnifier",
     "image enlarger",
