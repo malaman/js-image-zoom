@@ -16,8 +16,9 @@
      *          @param {object} offset {vertical, horizontal} offset in pixels between original image and zoomed image (optional)
      *          @param {string} zoomStyle custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
      */
-    return function ImageZoom(container, options) {
+    return function ImageZoom(container, opts) {
         "use strict";
+        var options = JSON.parse(JSON.stringify(opts));
         if (!container) {
             return;
         }

@@ -45,7 +45,7 @@ describe('js-image-zoom tests', () => {
         const setupData = imageZoom._getInstanceInfo().setup();
         imageZoom._getInstanceInfo().data.sourceImg.element.height = 555;
         imageZoom._getInstanceInfo().onSourceImgLoad();
-        expect(options.height).toEqual(555);
+        expect(imageZoom._getInstanceInfo().options.height).toEqual(555);
         expect(setupData.sourceImg.element).toEqual(jasmine.any(HTMLImageElement));
         expect(setupData.zoomedImg.element).toEqual(jasmine.any(HTMLDivElement));
         expect(setupData.zoomLens.element).toEqual(jasmine.any(HTMLDivElement));

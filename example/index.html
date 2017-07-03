@@ -100,7 +100,7 @@
     }
     function resetImageZoom(imageZoom) {
         window[imageZoom].kill();
-        window[imageZoom].setup();
+        window[imageZoom]= new ImageZoom(container, options);
     }
     function changeScale() {
         var scale = document.querySelector('input[name = "Scale"]:checked').value;
