@@ -145,7 +145,7 @@
             }
             data.sourceImg.element.onload = onSourceImgLoad;
             options = options || {};
-            container.style.position = 'absolute';
+            container.style.position = 'relative';
             data.sourceImg.element.style.width = options.width + 'px' || 'auto';
             data.sourceImg.element.style.height = options.height ? options.height + 'px' : 'auto';
 

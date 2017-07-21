@@ -9,6 +9,14 @@ Pure JavaScript utility for desktop browsers for image zoom on mouse hover. No e
 
 [Demo](http://malaman.github.io/js-image-zoom/example)
 
+
+## Install
+
+```
+npm install js-image-zoom --save
+```
+
+
 ## Arguments
 
 - **container** (Object) - DOM element, which contains an source image
@@ -20,6 +28,12 @@ Pure JavaScript utility for desktop browsers for image zoom on mouse hover. No e
     * **scale** (number) - zoom scale. if not provided, scale is calculated as natural image size / image size, provided in params (optional if zoomWidth param is provided)
     * **offset** (object) - {vertical: number, horizontal: number}. Zoomed image offset (optional)
     * **zoomStyle** (string) - custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
+
+## For react users
+
+React wrapper around js-image-zoom is available:
+
+[react-image-zoom](https://www.npmjs.com/package/react-image-zoom)
 
 ## RouteMap
 

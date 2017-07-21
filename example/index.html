@@ -9,9 +9,10 @@
         .wrapper {
             min-height: 400px;
             margin-left: 10px;
+            display: flex;
         }
         .imageblock {
-            margin-left: 140px;
+            margin-left: 15px;
         }
         .settings {
             max-width: 130px;
@@ -32,12 +33,8 @@
     </style>
 </head>
 <body>
+<h4 id="zoomOptions"></h4>
 <div class="wrapper">
-    <h4 id="zoomOptions"></h4>
-    <div class="imageblock">
-        <div id='container'>
-        </div>
-    </div>
     <div class="settings">
         <button id='kill' class='pure-button settings__button' onclick="killImageZoom('imageZoom')">kill</button>
         <button id='setup' class='pure-button settings__button' onclick="setupImageZoom('imageZoom')" disabled>setup</button>
@@ -56,6 +53,10 @@
                 <label for="scale_2"> 2.0</label><br>
             </fieldset>
         </form>
+    </div>
+    <div class="imageblock">
+        <div id='container'>
+        </div>
     </div>
 </div>
 <script>
