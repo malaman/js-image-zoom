@@ -16,6 +16,41 @@ Pure JavaScript utility for desktop browsers for image zoom on mouse hover. No e
 npm install js-image-zoom --save
 ```
 
+## Usage
+
+Basic usage example
+
+```javascript
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF8">
+    <title>Title</title>
+    <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script>    
+</head>
+<body>
+    <div id="img-container">
+        <img src="https://static.franks-travelbox.com/e/7/4/9/e749959ea9e2864e304a5024754efbeaa6e71b59/allerlei-leckereien-und-der-exklusive-rathausmarkt-gluehwein-laden-zum-schauen-shoppen-und-schlemmen-am-weihnachtsmarkt-vor-dem-hamburger-rathaus-ein-deutschland.jpg" />
+    <div>
+<script>
+var options = {
+    width: 400,    
+    zoomWidth: 500,    
+    offset: {vertical: 0, horizontal: 10}
+};
+new ImageZoom(document.getElementById("img-container"), options);
+    
+</script>
+</body>
+</html>
+
+```
+
+Check basic example in browser:
+[Basic Example](http://malaman.github.io/js-image-zoom/example/basic.html)
+
+
+
 
 ## Arguments
 
