@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "jest-cli": "^15.1.1"
+    "jest-cli": "^22.0.0"
   },
   "engines": {
     "node": ">=0.8.0"

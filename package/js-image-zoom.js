@@ -15,6 +15,7 @@
      *          @param {number} scale Zoom scale. If provided zoomWidth param is ignored (optional if zoomWidth param is provided)
      *          @param {object} offset {vertical, horizontal} offset in pixels between original image and zoomed image (optional)
      *          @param {string} zoomStyle custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
+     *          @param {string} zoomLensStyle custom style applied to to zoom lents (i.e. 'opacity: 0.1;background-color: white;')
      */
     return function ImageZoom(container, opts) {
         "use strict";
@@ -117,6 +118,12 @@
             if (options.zoomStyle) {
                 data.zoomedImg.element.style.cssText +=  options.zoomStyle;
             }
+            if (options.zoomLensStyle) {
+                data.zoomLens.element.style.cssText +=  options.zoomLensStyle;
+            } else {
+                data.zoomLens.element.style.background = 'white';
+                data.zoomLens.element.style.opacity = 0.4;
+            }
             scaleX = data.sourceImg.naturalWidth / options.width;
             scaleY = data.sourceImg.naturalHeight / options.height;
             offset = getOffset(data.sourceImg.element);
@@ -127,11 +134,9 @@
                 data.zoomLens.width = options.zoomWidth / scaleX;
                 data.zoomLens.height = options.height / scaleY;
             }
+            data.zoomLens.element.style.position = 'absolute';
             data.zoomLens.element.style.width = data.zoomLens.width + 'px';
             data.zoomLens.element.style.height = data.zoomLens.height + 'px';
-            data.zoomLens.element.style.position = 'absolute';
-            data.zoomLens.element.style.background = 'white';
-            data.zoomLens.element.style.opacity = 0.4;
             data.zoomLens.element.pointerEvents = 'none';
         };
 
