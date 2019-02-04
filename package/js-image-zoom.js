@@ -159,7 +159,8 @@
 
             data.zoomedImg.element.style.position = 'absolute';
             data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical + 'px';
-            data.zoomedImg.element.style.left = options.width + data.zoomedImgOffset.horizontal + 'px';
+            data.zoomedImg.element.style.right = data.zoomedImgOffset.horizontal - (data.zoomedImgOffset.horizontal * 2) + 'px';
+            data.zoomedImg.element.style.transform = 'translateX(100%)';
             data.zoomedImg.element.style.backgroundImage = 'url(' + data.sourceImg.element.src + ')';
             data.zoomedImg.element.style.backgroundRepeat = 'no-repeat';
             data.zoomedImg.element.style.display = 'none';
