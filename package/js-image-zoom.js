@@ -185,6 +185,9 @@
             }
             if (options.img) {
                 container.removeChild(data.sourceImg.element);
+            } else {
+                data.sourceImg.element.style.width = '';
+                data.sourceImg.element.style.height = '';
             }
             return data;
         }
