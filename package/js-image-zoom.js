@@ -148,7 +148,6 @@
             } else {
                 data.sourceImg.element = container.children[0];
             }
-            data.sourceImg.element.onload = onSourceImgLoad;
             options = options || {};
             container.style.position = 'relative';
             data.sourceImg.element.style.width = options.width + 'px' || 'auto';
@@ -230,6 +229,7 @@
             }
         };
         setup();
+        onSourceImgLoad();
 
         return {
             setup: function() {
