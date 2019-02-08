@@ -170,7 +170,6 @@
 
             data.zoomedImg.element = data.zoomContainer.appendChild(div);
             data.zoomedImg.element.classList.add('js-image-zoom__zoomed-image');
-            data.zoomedImg.element.style.position = 'absolute';
             data.zoomedImg.element.style.backgroundImage = "url('" + data.sourceImg.element.src + "')";
             data.zoomedImg.element.style.backgroundRepeat = 'no-repeat';
             data.zoomedImg.element.style.display = 'none';
@@ -178,18 +177,21 @@
             if (data.zoomDefaultPosition) {
                 switch (data.zoomPosition) {
                     case 'left':
+                        data.zoomedImg.element.style.position = 'absolute';
                         data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical + 'px';
                         data.zoomedImg.element.style.left = data.zoomedImgOffset.horizontal - (data.zoomedImgOffset.horizontal * 2) + 'px';
                         data.zoomedImg.element.style.transform = 'translateX(-100%)';
                         break;
 
                     case 'top':
+                        data.zoomedImg.element.style.position = 'absolute';
                         data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical - (data.zoomedImgOffset.vertical * 2) + 'px';
                         data.zoomedImg.element.style.left = 'calc(50% + ' + data.zoomedImgOffset.horizontal + 'px)';
                         data.zoomedImg.element.style.transform = 'translate3d(-50%, -100%, 0)';
                         break;
 
                     case 'bottom':
+                        data.zoomedImg.element.style.position = 'absolute';
                         data.zoomedImg.element.style.bottom = data.zoomedImgOffset.vertical - (data.zoomedImgOffset.vertical * 2) + 'px';
                         data.zoomedImg.element.style.left = 'calc(50% + ' + data.zoomedImgOffset.horizontal + 'px)';
                         data.zoomedImg.element.style.transform = 'translate3d(-50%, 100%, 0)';
@@ -197,6 +199,7 @@
 
                     // Right Position
                     default:
+                        data.zoomedImg.element.style.position = 'absolute';
                         data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical + 'px';
                         data.zoomedImg.element.style.right = data.zoomedImgOffset.horizontal - (data.zoomedImgOffset.horizontal * 2) + 'px';
                         data.zoomedImg.element.style.transform = 'translateX(100%)';
