@@ -15,7 +15,7 @@
             margin-left: 15px;
         }
         .settings {
-            max-width: 130px;
+            width: 400px;
         }
 
         .settings__button {
@@ -29,6 +29,9 @@
         .setting__inputset__fieldset {
             border: 0;
             margin-top: -15px;
+        }
+        #container {
+            margin-top: 200px;
         }
     </style>
 </head>
@@ -53,6 +56,24 @@
                 <label for="scale_2"> 2.0</label><br>
             </fieldset>
         </form>
+        <p>Zoomed Image Position:</p>
+        <form class="setting__zoomed-image-position">
+            <fieldset class="setting__inputset__fieldset" onclick="changeZoomPosition()">
+                <input type="radio" id="zoom_position_default" name="ZoomPosition" value="0" checked="checked">
+                <label for="default"> Default</label><br>
+                <input type="radio" id="zoom_position_left" name="ZoomPosition" value="left">
+                <label for="scale_1.5"> left</label><br>
+                <input type="radio" id="zoom_position_right" name="ZoomPosition" value="right">
+                <label for="scale_1.8"> right</label><br>
+                <input type="radio" id="zoom_position_top" name="ZoomPosition" value="top">
+                <label for="scale_2"> top</label><br>
+                <input type="radio" id="zoom_position_bottom" name="ZoomPosition" value="bottom">
+                <label for="scale_2">bottom</label><br>
+
+            </fieldset>
+        </form>
+
+
     </div>
     <div class="imageblock">
         <div id='container'>
@@ -66,7 +87,7 @@
         height: 250,
         zoomWidth: 500,
         img: "1.jpg",
-        offset: {vertical: 0, horizontal: 10}        
+        offset: {vertical: 0, horizontal: 10}
     };
     var container = document.getElementById('container');
     var optionsHeader = document.getElementById('zoomOptions');
@@ -115,6 +136,21 @@
         window.imageZoom = new ImageZoom(container, options);
         updateButtonStatus();
     }
+    function changeZoomPosition() {
+        var zoomPosition = document.querySelector('input[name = "ZoomPosition"]:checked').value;
+        if (zoomPosition !== 'default') {
+            options.zoomDefaultPosition = false;
+            options.zoomPosition = zoomPosition;
+        } else {
+            delete options.zoomPosition;
+        }
+        optionsHeader.innerHTML = 'Options: ' + JSON.stringify(options);
+        killImageZoom('imageZoom');
+        window.imageZoom = new ImageZoom(container, options);
+        updateButtonStatus();
+    }
+
+
     function changeImage(imageZoom) {
         currentImage = currentImage === 1 ? 2 : 1;
         options.img = currentImage + '.jpg';
