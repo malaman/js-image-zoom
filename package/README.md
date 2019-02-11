@@ -30,7 +30,7 @@ Basic usage example
 </head>
 <body>
     <div id="img-container" style="width: 400px">
-        <img src="https://static.franks-travelbox.com/e/7/4/9/e749959ea9e2864e304a5024754efbeaa6e71b59/allerlei-leckereien-und-der-exklusive-rathausmarkt-gluehwein-laden-zum-schauen-shoppen-und-schlemmen-am-weihnachtsmarkt-vor-dem-hamburger-rathaus-ein-deutschland.jpg" />
+        <img src="https://github.com/malaman/js-image-zoom/blob/master/example/1.jpg" />
     <div>
 <script>
 var options = {
@@ -62,10 +62,7 @@ Check basic example in browser:
     * **img** (string) - url of the source image. Provided if container does not contain img element as a tag(optional)
     * **scale** (number) - zoom scale. if not provided, scale is calculated as natural image size / image size, provided in params (optional if zoomWidth param is provided)
     * **offset** (object) - {vertical: number, horizontal: number}. Zoomed image offset (optional)
-    * **zoomContainer** (node) - DOM node reference where zoomedImage will be appended to (default to the container element of image)
     * **zoomStyle** (string) - custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
-    * **zoomPosition** (string) - position of zoomed image. It can be:  'top', 'left', 'bottom' or the default 'right'. (Ignored if `zoomDefaultPosition` is false)
-    * **zoomDefaultPosition** (boolean) Disable the default position styles in zoomedImage if `false`. (default: true)
     * **zoomLensStyle** (string) custom style applied to to zoom lents (i.e. 'opacity: 0.1;background-color: white;')
 
 ## For react users
@@ -77,4 +74,4 @@ React wrapper around js-image-zoom is available:
 ## RouteMap
 
 - [ ] extend testing coverage
-- [ ] add aditioinal examples
+- [ ] add additional examples

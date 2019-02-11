@@ -30,7 +30,7 @@ Basic usage example
 </head>
 <body>
     <div id="img-container" style="width: 400px">
-        <img src="https://static.franks-travelbox.com/e/7/4/9/e749959ea9e2864e304a5024754efbeaa6e71b59/allerlei-leckereien-und-der-exklusive-rathausmarkt-gluehwein-laden-zum-schauen-shoppen-und-schlemmen-am-weihnachtsmarkt-vor-dem-hamburger-rathaus-ein-deutschland.jpg" />
+        <img src="https://github.com/malaman/js-image-zoom/blob/master/example/1.jpg" />
     <div>
 <script>
 var options = {
