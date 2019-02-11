@@ -56,14 +56,17 @@ Check basic example in browser:
 
 - **container** (Object) - DOM element, which contains an source image
 - **options** (Object) - js-image-zoom options
-    * **width** (number) - width of the source image(required)
-    * **height** (number) - height of the source image(optional).
-    * **zoomWidth** (number) - width of the zoomed image. Zoomed image height equals source image height(optional if scale param is provided)
-    * **img** (string) - url of the source image. Provided if container does not contain img element as a tag(optional)
-    * **scale** (number) - zoom scale. if not provided, scale is calculated as natural image size / image size, provided in params (optional if zoomWidth param is provided)
-    * **offset** (object) - {vertical: number, horizontal: number}. Zoomed image offset (optional)
-    * **zoomStyle** (string) - custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
-    * **zoomLensStyle** (string) custom style applied to to zoom lents (i.e. 'opacity: 0.1;background-color: white;')
+     * **width** (number) - width of the source image(required)
+     * **height** (number) - height of the source image(optional).
+     * **zoomWidth** (number) - width of the zoomed image. Zoomed image height equals source image height(optional if scale param is provided)
+     * **img** (string) - url of the source image. Provided if container does not contain img element as a tag(optional)
+     * **scale** (number) - zoom scale. if not provided, scale is calculated as natural image size / image size, provided in params (optional if zoomWidth param is provided)
+     * **offset** (object) - {vertical: number, horizontal: number}. Zoomed image offset (optional)
+     * **zoomContainer** (node) - DOM node reference where zoomedImage will be appended to (default to the container element of image)
+     * **zoomStyle** (string) - custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
+     * **zoomPosition** (string) - position of zoomed image. It can be:  'top', 'left', 'bottom' or the default 'right'. (Ignored if `zoomDefaultPosition` is false)
+     * **zoomDefaultPosition** (boolean) Disable the default position styles in zoomedImage if `false`. (default: true)
+     * **zoomLensStyle** (string) custom style applied to to zoom lents (i.e. 'opacity: 0.1;background-color: white;')
 
 ## For react users
 
