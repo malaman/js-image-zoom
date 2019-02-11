@@ -8,14 +8,17 @@
     /**
      * @param {Object} container DOM element, which contains an image to be zoomed (required)
      * @param {Object} options js-image-zoom options (required)
-     *          @param {number} width Image width (required)
-     *          @param {number} height Image height (optional)
-     *          @param {number} zoomWidth  Zoomed image width optional if scale param is provided
-     *          @param {string} img Url of image to zoom. If provided container children is ignored (optional)
-     *          @param {number} scale Zoom scale. If provided zoomWidth param is ignored (optional if zoomWidth param is provided)
-     *          @param {object} offset {vertical, horizontal} offset in pixels between original image and zoomed image (optional)
-     *          @param {string} zoomStyle custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
-     *          @param {string} zoomLensStyle custom style applied to to zoom lents (i.e. 'opacity: 0.1;background-color: white;')
+     * **width** (number) - width of the source image(required)
+     * **height** (number) - height of the source image(optional).
+     * **zoomWidth** (number) - width of the zoomed image. Zoomed image height equals source image height(optional if scale param is provided)
+     * **img** (string) - url of the source image. Provided if container does not contain img element as a tag(optional)
+     * **scale** (number) - zoom scale. if not provided, scale is calculated as natural image size / image size, provided in params (optional if zoomWidth param is provided)
+     * **offset** (object) - {vertical: number, horizontal: number}. Zoomed image offset (optional)
+     * **zoomContainer** (node) - DOM node reference where zoomedImage will be appended to (default to the container element of image)
+     * **zoomStyle** (string) - custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
+     * **zoomPosition** (string) - position of zoomed image. It can be:  'top', 'left', 'bottom' or the default 'right'. (Ignored if `zoomDefaultPosition` is false)
+     * **zoomDefaultPosition** (boolean) Disable the default position styles in zoomedImage if `false`. (default: true)
+     * **zoomLensStyle** (string) custom style applied to to zoom lents (i.e. 'opacity: 0.1;background-color: white;')
      */
     return function ImageZoom(container, opts) {
         "use strict";
@@ -52,14 +55,13 @@
         var scaleX;
         var scaleY;
         var offset;
-        data.zoomedImgOffset =  {
-            vertical: (options.offset.vertical) ? options.offset.vertical : 0,
-            horizontal: (options.offset.horizontal) ? options.offset.horizontal : 0
+        data.zoomedImgOffset = {
+            vertical: options.offset && options.offset.vertical ? options.offset.vertical : 0,
+            horizontal: options.offset && options.offset.horizontal ? options.offset.horizontal : 0
         };
         data.zoomPosition = options.zoomPosition || 'right';
         data.zoomContainer = (options.zoomContainer) ? options.zoomContainer : container;
-        console.log(options.zoomContainer);
-        data.zoomDefaultPosition = (options.zoomDefaultPosition) ? options.zoomDefaultPosition : true; 
+        data.zoomDefaultPosition = (options.zoomDefaultPosition) ? options.zoomDefaultPosition : true;
 
         function getOffset(el) {
             if (el) {
@@ -122,12 +124,12 @@
             data.sourceImg.naturalWidth = data.sourceImg.element.naturalWidth;
             data.sourceImg.naturalHeight = data.sourceImg.element.naturalHeight;
             data.zoomedImg.element.style.backgroundSize = data.sourceImg.naturalWidth + 'px ' + data.sourceImg.naturalHeight + 'px';
-            
+
             if (options.zoomStyle) {
-                data.zoomedImg.element.style.cssText +=  options.zoomStyle;
+                data.zoomedImg.element.style.cssText += options.zoomStyle;
             }
             if (options.zoomLensStyle) {
-                data.zoomLens.element.style.cssText +=  options.zoomLensStyle;
+                data.zoomLens.element.style.cssText += options.zoomLensStyle;
             } else {
                 data.zoomLens.element.style.background = 'white';
                 data.zoomLens.element.style.opacity = 0.4;
@@ -206,7 +208,7 @@
                         break;
                 }
             }
-            
+
             container.addEventListener('mousemove', events, false);
             container.addEventListener('mouseenter', events, false);
             container.addEventListener('mouseleave', events, false);
@@ -224,7 +226,7 @@
             data.zoomLens.element.removeEventListener('mouseenter', events, false);
             data.zoomLens.element.removeEventListener('mouseleave', events, false);
             window.removeEventListener('scroll', events, false);
-            
+
             if (data.zoomLens && data.zoomedImg) {
                 container.removeChild(data.zoomLens.element);
                 data.zoomContainer.removeChild(data.zoomedImg.element);
@@ -241,15 +243,19 @@
         }
 
         var events = {
-            handleEvent: function(event) {
-                switch(event.type) {
-                    case 'mousemove': return this.handleMouseMove(event);
-                    case 'mouseenter': return this.handleMouseEnter(event);
-                    case 'mouseleave': return this.handleMouseLeave(event);
-                    case 'scroll': return this.handleScroll(event);
+            handleEvent: function (event) {
+                switch (event.type) {
+                    case 'mousemove':
+                        return this.handleMouseMove(event);
+                    case 'mouseenter':
+                        return this.handleMouseEnter(event);
+                    case 'mouseleave':
+                        return this.handleMouseLeave(event);
+                    case 'scroll':
+                        return this.handleScroll(event);
                 }
             },
-            handleMouseMove: function(event) {
+            handleMouseMove: function (event) {
                 var offsetX;
                 var offsetY;
                 var backgroundTop;
@@ -260,22 +266,22 @@
                     offsetY = zoomLensTop(event.clientY - offset.top);
                     backgroundTop = offsetX * scaleX;
                     backgroundRight = offsetY * scaleY;
-                    backgroundPosition = '-' + backgroundTop + 'px ' +  '-' + backgroundRight + 'px';
+                    backgroundPosition = '-' + backgroundTop + 'px ' + '-' + backgroundRight + 'px';
                     data.zoomedImg.element.style.backgroundPosition = backgroundPosition;
                     data.zoomLens.element.style.cssText += 'top:' + offsetY + 'px;' + 'left:' + offsetX + 'px;display: block;';
 
                 }
             },
-            handleMouseEnter: function() {
-                data.zoomedImg.element.style.display  = 'block';
+            handleMouseEnter: function () {
+                data.zoomedImg.element.style.display = 'block';
                 data.zoomLens.element.style.display = 'block';
 
             },
-            handleMouseLeave: function() {
-                data.zoomedImg.element.style.display  = 'none';
+            handleMouseLeave: function () {
+                data.zoomedImg.element.style.display = 'none';
                 data.zoomLens.element.style.display = 'none';
             },
-            handleScroll: function() {
+            handleScroll: function () {
                 offset = getOffset(data.sourceImg.element);
             }
         };
@@ -290,13 +296,13 @@
         }
 
         return {
-            setup: function() {
+            setup: function () {
                 setup();
             },
-            kill: function() {
+            kill: function () {
                 kill();
             },
-            _getInstanceInfo: function() {
+            _getInstanceInfo: function () {
                 return {
                     setup: setup,
                     kill: kill,
