@@ -1,8 +1,8 @@
 {
   "name": "js-image-zoom-repo",
   "private": true,
-  "version": "0.0.2",
-  "main": "js-image-zoom.js",
+  "version": "0.6.0",
+  "main": "package/js-image-zoom.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/malaman/js-image-zoom.git"

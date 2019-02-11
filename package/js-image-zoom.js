@@ -19,7 +19,7 @@
      */
     return function ImageZoom(container, opts) {
         "use strict";
-        var options = JSON.parse(JSON.stringify(opts));
+        var options = opts;
         if (!container) {
             return;
         }
@@ -52,7 +52,14 @@
         var scaleX;
         var scaleY;
         var offset;
-        data.zoomedImgOffset = options.offset || {vertical: 0, horizontal: 0};
+        data.zoomedImgOffset =  {
+            vertical: (options.offset.vertical) ? options.offset.vertical : 0,
+            horizontal: (options.offset.horizontal) ? options.offset.horizontal : 0
+        };
+        data.zoomPosition = options.zoomPosition || 'right';
+        data.zoomContainer = (options.zoomContainer) ? options.zoomContainer : container;
+        console.log(options.zoomContainer);
+        data.zoomDefaultPosition = (options.zoomDefaultPosition) ? options.zoomDefaultPosition : true; 
 
         function getOffset(el) {
             if (el) {
@@ -115,6 +122,7 @@
             data.sourceImg.naturalWidth = data.sourceImg.element.naturalWidth;
             data.sourceImg.naturalHeight = data.sourceImg.element.naturalHeight;
             data.zoomedImg.element.style.backgroundSize = data.sourceImg.naturalWidth + 'px ' + data.sourceImg.naturalHeight + 'px';
+            
             if (options.zoomStyle) {
                 data.zoomedImg.element.style.cssText +=  options.zoomStyle;
             }
@@ -124,9 +132,11 @@
                 data.zoomLens.element.style.background = 'white';
                 data.zoomLens.element.style.opacity = 0.4;
             }
+
             scaleX = data.sourceImg.naturalWidth / options.width;
             scaleY = data.sourceImg.naturalHeight / options.height;
             offset = getOffset(data.sourceImg.element);
+
             if (options.scale) {
                 data.zoomLens.width = options.width / (data.sourceImg.naturalWidth / (options.width * options.scale));
                 data.zoomLens.height = options.height / (data.sourceImg.naturalHeight / (options.height * options.scale));
@@ -134,6 +144,7 @@
                 data.zoomLens.width = options.zoomWidth / scaleX;
                 data.zoomLens.height = options.height / scaleY;
             }
+
             data.zoomLens.element.style.position = 'absolute';
             data.zoomLens.element.style.width = data.zoomLens.width + 'px';
             data.zoomLens.element.style.height = data.zoomLens.height + 'px';
@@ -148,7 +159,6 @@
             } else {
                 data.sourceImg.element = container.children[0];
             }
-            data.sourceImg.element.onload = onSourceImgLoad;
             options = options || {};
             container.style.position = 'relative';
             data.sourceImg.element.style.width = options.width + 'px' || 'auto';
@@ -156,20 +166,54 @@
 
             data.zoomLens.element = container.appendChild(lensDiv);
             data.zoomLens.element.style.display = 'none';
-            data.zoomedImg.element = container.appendChild(div);
+            data.zoomLens.element.classList.add('js-image-zoom__zoomed-area');
 
-            data.zoomedImg.element.style.position = 'absolute';
-            data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical + 'px';
-            data.zoomedImg.element.style.left = options.width + data.zoomedImgOffset.horizontal + 'px';
-            data.zoomedImg.element.style.backgroundImage = 'url(' + data.sourceImg.element.src + ')';
+            data.zoomedImg.element = data.zoomContainer.appendChild(div);
+            data.zoomedImg.element.classList.add('js-image-zoom__zoomed-image');
+            data.zoomedImg.element.style.backgroundImage = "url('" + data.sourceImg.element.src + "')";
             data.zoomedImg.element.style.backgroundRepeat = 'no-repeat';
             data.zoomedImg.element.style.display = 'none';
+
+            if (data.zoomDefaultPosition) {
+                switch (data.zoomPosition) {
+                    case 'left':
+                        data.zoomedImg.element.style.position = 'absolute';
+                        data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical + 'px';
+                        data.zoomedImg.element.style.left = data.zoomedImgOffset.horizontal - (data.zoomedImgOffset.horizontal * 2) + 'px';
+                        data.zoomedImg.element.style.transform = 'translateX(-100%)';
+                        break;
+
+                    case 'top':
+                        data.zoomedImg.element.style.position = 'absolute';
+                        data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical - (data.zoomedImgOffset.vertical * 2) + 'px';
+                        data.zoomedImg.element.style.left = 'calc(50% + ' + data.zoomedImgOffset.horizontal + 'px)';
+                        data.zoomedImg.element.style.transform = 'translate3d(-50%, -100%, 0)';
+                        break;
+
+                    case 'bottom':
+                        data.zoomedImg.element.style.position = 'absolute';
+                        data.zoomedImg.element.style.bottom = data.zoomedImgOffset.vertical - (data.zoomedImgOffset.vertical * 2) + 'px';
+                        data.zoomedImg.element.style.left = 'calc(50% + ' + data.zoomedImgOffset.horizontal + 'px)';
+                        data.zoomedImg.element.style.transform = 'translate3d(-50%, 100%, 0)';
+                        break;
+
+                    // Right Position
+                    default:
+                        data.zoomedImg.element.style.position = 'absolute';
+                        data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical + 'px';
+                        data.zoomedImg.element.style.right = data.zoomedImgOffset.horizontal - (data.zoomedImgOffset.horizontal * 2) + 'px';
+                        data.zoomedImg.element.style.transform = 'translateX(100%)';
+                        break;
+                }
+            }
+            
             container.addEventListener('mousemove', events, false);
             container.addEventListener('mouseenter', events, false);
             container.addEventListener('mouseleave', events, false);
             data.zoomLens.element.addEventListener('mouseenter', events, false);
             data.zoomLens.element.addEventListener('mouseleave', events, false);
             window.addEventListener('scroll', events, false);
+
             return data;
         }
 
@@ -180,13 +224,19 @@
             data.zoomLens.element.removeEventListener('mouseenter', events, false);
             data.zoomLens.element.removeEventListener('mouseleave', events, false);
             window.removeEventListener('scroll', events, false);
+            
             if (data.zoomLens && data.zoomedImg) {
                 container.removeChild(data.zoomLens.element);
-                container.removeChild(data.zoomedImg.element);
+                data.zoomContainer.removeChild(data.zoomedImg.element);
             }
+
             if (options.img) {
                 container.removeChild(data.sourceImg.element);
+            } else {
+                data.sourceImg.element.style.width = '';
+                data.sourceImg.element.style.height = '';
             }
+
             return data;
         }
 
@@ -229,7 +279,15 @@
                 offset = getOffset(data.sourceImg.element);
             }
         };
+
+        // Setup/Initialize library
         setup();
+
+        if (data.sourceImg.element.complete) {
+            onSourceImgLoad();
+        } else {
+            data.sourceImg.element.onload = onSourceImgLoad;
+        }
 
         return {
             setup: function() {
