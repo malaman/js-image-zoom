@@ -8,10 +8,10 @@
     /**
      * @param {Object} container DOM element, which contains an image to be zoomed (required)
      * @param {Object} options js-image-zoom options (required)
-     * **width** (number) - width of the source image(required)
-     * **height** (number) - height of the source image(optional).
+     * **width** (number) - width of the source image (optional)
+     * **height** (number) - height of the source image (optional)
      * **zoomWidth** (number) - width of the zoomed image. Zoomed image height equals source image height(optional if scale param is provided)
-     * **img** (string) - url of the source image. Provided if container does not contain img element as a tag(optional)
+     * **img** (string) - url of the source image. Provided if container does not contain img element as a tag (optional)
      * **scale** (number) - zoom scale. if not provided, scale is calculated as natural image size / image size, provided in params (optional if zoomWidth param is provided)
      * **offset** (object) - {vertical: number, horizontal: number}. Zoomed image offset (optional)
      * **zoomContainer** (node) - DOM node reference where zoomedImage will be appended to (default to the container element of image)
@@ -115,9 +115,13 @@
         }
 
         function onSourceImgLoad() {
-            // use height, determined by browser if height is not set in options
+            // use height determined by browser if height is not set in options
             options.height = options.height || data.sourceImg.element.height;
             data.sourceImg.element.style.height = options.height + 'px';
+
+            // use width determined by browser if width is not set in options
+            options.width = options.width || data.sourceImg.element.width;
+            data.sourceImg.element.style.width = options.width + 'px';
 
             setZoomedImgSize(options, data);
 
@@ -173,7 +177,7 @@
 
             options = options || {};
             container.style.position = 'relative';
-            data.sourceImg.element.style.width = options.width + 'px' || 'auto';
+            data.sourceImg.element.style.width = options.width ? options.width + 'px' : 'auto';
             data.sourceImg.element.style.height = options.height ? options.height + 'px' : 'auto';
 
             data.zoomLens.element = container.appendChild(lensDiv);
