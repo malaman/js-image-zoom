@@ -139,7 +139,7 @@
                 data.zoomLens.element.style.cssText += options.zoomLensStyle;
             } else {
                 data.zoomLens.element.style.background = 'white';
-                data.zoomLens.element.style.opacity = 0.4;
+                data.zoomLens.element.style.opacity = '0.4';
             }
 
             scaleX = data.sourceImg.naturalWidth / options.width;
@@ -245,6 +245,7 @@
                 }
             }
 
+            // setup event listeners
             container.addEventListener('mousemove', events, false);
             container.addEventListener('mouseenter', events, false);
             container.addEventListener('mouseleave', events, false);
@@ -256,6 +257,8 @@
         }
 
         function kill() {
+
+            // remove event listeners
             container.removeEventListener('mousemove', events, false);
             container.removeEventListener('mouseenter', events, false);
             container.removeEventListener('mouseleave', events, false);
@@ -263,6 +266,7 @@
             data.zoomLens.element.removeEventListener('mouseleave', events, false);
             window.removeEventListener('scroll', events, false);
 
+            // remove dom nodes
             if (data.zoomLens && data.zoomedImg) {
                 container.removeChild(data.zoomLens.element);
                 data.zoomContainer.removeChild(data.zoomedImg.element);
