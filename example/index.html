@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF8">
-    <title>Title</title>
+    <title>js-image-zoom Demo</title>
     <script src="../package/js-image-zoom.js" type="application/javascript"></script>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <style>
@@ -33,6 +33,15 @@
         #container {
             margin-top: 200px;
         }
+
+        #container.onehundredpercent {
+            width: 350px;
+            height: 250px;
+        }
+
+        #container.onehundredpercent img {
+            max-width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -43,6 +52,7 @@
         <button id='setup' class='pure-button settings__button' onclick="setupImageZoom('imageZoom')" disabled>setup</button>
         <button id='reset' class='pure-button settings__button' onclick="resetImageZoom('imageZoom')">reset</button>
         <button id='change' class='pure-button settings__button' onclick="changeImage('imageZoom')">change image</button>
+
         <p>Scale:</p>
         <form class="setting__inputset">
             <fieldset class="setting__inputset__fieldset" onclick="changeScale()">
@@ -75,22 +85,31 @@
             </fieldset>
         </form>
 
+        <p>Fill container <br><span style="font-size: .8em">container dimensions are css-set</span></p>
+        <form class="setting__fill-container">
+            <fieldset class="setting__inputset__fieldset" onclick="changeFillContainerSetting()">
+                <input type="checkbox" id="fill_container_setting" name="FillContainer" value="on">
+                <label for="fill_container_setting"> Yes</label>
+            </fieldset>
+        </form>
 
     </div>
     <div class="imageblock">
-        <div id='container'>
-        </div>
+        <div id="container"></div>
     </div>
 </div>
 <script>
     var currentImage = 1;
-    var options = {
+    var defaultOptions = {
         width: 400,
         height: 250,
         zoomWidth: 500,
         img: "1.jpg",
         offset: {vertical: 0, horizontal: 10}
     };
+    var options;
+    resetOptions();
+
     var container = document.getElementById('container');
     var optionsHeader = document.getElementById('zoomOptions');
     var killButton = document.getElementById('kill');
@@ -98,6 +117,10 @@
     var resetButton = document.getElementById('reset');
     optionsHeader.innerHTML = 'Options: ' + JSON.stringify(options);
     window.imageZoom = new ImageZoom(container, options);
+
+    function resetOptions() {
+        options = JSON.parse(JSON.stringify(defaultOptions)); // widely supported deep copy
+    }
 
     function updateButtonStatus() {
         if (window.imageZoom) {
@@ -117,15 +140,18 @@
         delete window[imageZoom];
         updateButtonStatus();
     }
+
     function setupImageZoom(imageZoom) {
         window[imageZoom]= new ImageZoom(container, options);
         updateButtonStatus();
 
     }
+
     function resetImageZoom(imageZoom) {
         window[imageZoom].kill();
         window[imageZoom]= new ImageZoom(container, options);
     }
+
     function changeScale() {
         var scale = document.querySelector('input[name = "Scale"]:checked').value;
         if (scale > 0) {
@@ -138,6 +164,7 @@
         window.imageZoom = new ImageZoom(container, options);
         updateButtonStatus();
     }
+
     function changeZoomPosition() {
         var zoomPosition = document.querySelector('input[name = "ZoomPosition"]:checked').value;
         if (zoomPosition !== 'default') {
@@ -152,12 +179,26 @@
         updateButtonStatus();
     }
 
+    function changeFillContainerSetting() {
+        var fillContainer = document.querySelector('input[name="FillContainer"]').checked;
+        if (fillContainer === true) {
+            document.getElementById('container').classList.add('onehundredpercent');
+            delete options.width;
+            delete options.height;
+            delete options.zoomWidth;
+        } else {
+            document.getElementById('container').classList.remove('onehundredpercent');
+            resetOptions();
+        }
+        optionsHeader.innerHTML = 'Options: ' + JSON.stringify(options);
+        resetImageZoom('imageZoom');
+    }
 
     function changeImage(imageZoom) {
         currentImage = currentImage === 1 ? 2 : 1;
         options.img = currentImage + '.jpg';
         resetImageZoom(imageZoom);
-    };
+    }
 </script>
 </body>
 </html>
