@@ -229,6 +229,12 @@
                         data.zoomedImg.element.style.transform = 'translate3d(-50%, 100%, 0)';
                         break;
 
+                    case 'original':
+                        data.zoomedImg.element.style.position = 'absolute';
+                        data.zoomedImg.element.style.top = '0px';
+                        data.zoomedImg.element.style.left = '0px';
+                        break;
+
                     // Right Position
                     default:
                         data.zoomedImg.element.style.position = 'absolute';
