@@ -154,13 +154,23 @@
         };
 
         function setup() {
+            // create sourceImg element
             if (options.img) {
                 var img = document.createElement('img');
                 img.src = options.img;
                 data.sourceImg.element = container.appendChild(img);
-            } else {
-                data.sourceImg.element = container.children[0];
             }
+
+            // or get sourceImg element from specified container
+            else {
+                data.sourceImg.element = container.children[0];
+
+                // if sourceImg is not an img (might be a picture element), try to find one
+                if (data.sourceImg.element.nodeName !== "IMG") {
+                    data.sourceImg.element = data.sourceImg.element.querySelector('img');
+                }
+            }
+
             options = options || {};
             container.style.position = 'relative';
             data.sourceImg.element.style.width = options.width + 'px' || 'auto';
