@@ -10,7 +10,7 @@
      * @param {Object} options js-image-zoom options (required)
      * **width** (number) - width of the source image (optional)
      * **height** (number) - height of the source image (optional)
-     * **zoomWidth** (number) - width of the zoomed image. Zoomed image height equals source image height(optional if scale param is provided)
+     * **zoomWidth** (number) - width of the zoomed image. Zoomed image height equals source image height (optional)
      * **img** (string) - url of the source image. Provided if container does not contain img element as a tag (optional)
      * **scale** (number) - zoom scale. if not provided, scale is calculated as natural image size / image size, provided in params (optional if zoomWidth param is provided)
      * **offset** (object) - {vertical: number, horizontal: number}. Zoomed image offset (optional)
@@ -108,9 +108,12 @@
             if (options.scale) {
                 data.zoomedImg.element.style.width = options.width * options.scale + 'px';
                 data.zoomedImg.element.style.height = options.height * options.scale + 'px';
-            } else {
+            } else if (options.zoomWidth) {
                 data.zoomedImg.element.style.width = options.zoomWidth + 'px';
                 data.zoomedImg.element.style.height = data.sourceImg.element.style.height;
+            } else {
+                data.zoomedImg.element.style.width = '100%';
+                data.zoomedImg.element.style.height = '100%';
             }
         }
 
@@ -143,19 +146,32 @@
             scaleY = data.sourceImg.naturalHeight / options.height;
             offset = getOffset(data.sourceImg.element);
 
+            // set zoomLens dimensions
+            // if custom scale is set
             if (options.scale) {
                 data.zoomLens.width = options.width / (data.sourceImg.naturalWidth / (options.width * options.scale));
                 data.zoomLens.height = options.height / (data.sourceImg.naturalHeight / (options.height * options.scale));
-            } else {
+            }
+
+            // else if zoomWidth is set
+            else if (options.zoomWidth) {
                 data.zoomLens.width = options.zoomWidth / scaleX;
                 data.zoomLens.height = options.height / scaleY;
+            }
+
+            // else read from the zoomedImg
+            else {
+                data.zoomedImg.element.style.display = 'block';
+                data.zoomLens.width = data.zoomedImg.element.clientWidth / scaleX;
+                data.zoomLens.height = data.zoomedImg.element.clientHeight / scaleY;
+                data.zoomedImg.element.style.display = 'none';
             }
 
             data.zoomLens.element.style.position = 'absolute';
             data.zoomLens.element.style.width = data.zoomLens.width + 'px';
             data.zoomLens.element.style.height = data.zoomLens.height + 'px';
             data.zoomLens.element.pointerEvents = 'none';
-        };
+        }
 
         function setup() {
             // create sourceImg element
