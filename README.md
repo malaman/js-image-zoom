@@ -49,17 +49,14 @@ new ImageZoom(document.getElementById("img-container"), options);
 Check basic example in browser:
 [Basic Example](http://malaman.github.io/js-image-zoom/example/basic.html)
 
-
-
-
 ## Arguments
 
-- **container** (Object) - DOM element, which contains an source image
+- **container** (Object) - DOM element, which contains a source image
 - **options** (Object) - js-image-zoom options
-     * **width** (number) - width of the source image(required)
-     * **height** (number) - height of the source image(optional).
-     * **zoomWidth** (number) - width of the zoomed image. Zoomed image height equals source image height(optional if scale param is provided)
-     * **img** (string) - url of the source image. Provided if container does not contain img element as a tag(optional)
+     * **width** (number) - width of the source image (optional)
+     * **height** (number) - height of the source image (optional).
+     * **zoomWidth** (number) - width of the zoomed image. Zoomed image height equals source image height (optional)
+     * **img** (string) - url of the source image. Provided if container does not contain img element as a tag (optional)
      * **scale** (number) - zoom scale. if not provided, scale is calculated as natural image size / image size, provided in params (optional if zoomWidth param is provided)
      * **offset** (object) - {vertical: number, horizontal: number}. Zoomed image offset (optional)
      * **zoomContainer** (node) - DOM node reference where zoomedImage will be appended to (default to the container element of image)
