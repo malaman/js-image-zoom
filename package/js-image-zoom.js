@@ -9,15 +9,14 @@
      * @param {Object} container DOM element, which contains an image to be zoomed (required)
      * @param {Object} options js-image-zoom options (required)
      * **width** (number) - width of the source image (optional)
-     * **height** (number) - height of the source image (optional)
+     * **height** (number) - height of the source image (optional).
      * **zoomWidth** (number) - width of the zoomed image. Zoomed image height equals source image height (optional)
      * **img** (string) - url of the source image. Provided if container does not contain img element as a tag (optional)
      * **scale** (number) - zoom scale. if not provided, scale is calculated as natural image size / image size, provided in params (optional if zoomWidth param is provided)
      * **offset** (object) - {vertical: number, horizontal: number}. Zoomed image offset (optional)
      * **zoomContainer** (node) - DOM node reference where zoomedImage will be appended to (default to the container element of image)
      * **zoomStyle** (string) - custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
-     * **zoomPosition** (string) - position of zoomed image. It can be:  'top', 'left', 'bottom' or the default 'right'. (Ignored if `zoomDefaultPosition` is false)
-     * **zoomDefaultPosition** (boolean) Disable the default position styles in zoomedImage if `false`. (default: true)
+     * **zoomPosition** (string) - position of zoomed image. It can be:  `top`, `left`, `bottom`, `original` or the default `right`.
      * **zoomLensStyle** (string) custom style applied to to zoom lents (i.e. 'opacity: 0.1;background-color: white;')
      */
     return function ImageZoom(container, opts) {
@@ -61,8 +60,6 @@
         };
         data.zoomPosition = options.zoomPosition || 'right';
         data.zoomContainer = (options.zoomContainer) ? options.zoomContainer : container;
-        data.zoomDefaultPosition = (options.zoomDefaultPosition) ? options.zoomDefaultPosition : true;
-
         function getOffset(el) {
             if (el) {
                 var elRect = el.getBoundingClientRect();
@@ -206,44 +203,43 @@
             data.zoomedImg.element.style.backgroundRepeat = 'no-repeat';
             data.zoomedImg.element.style.display = 'none';
 
-            if (data.zoomDefaultPosition) {
-                switch (data.zoomPosition) {
-                    case 'left':
-                        data.zoomedImg.element.style.position = 'absolute';
-                        data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical + 'px';
-                        data.zoomedImg.element.style.left = data.zoomedImgOffset.horizontal - (data.zoomedImgOffset.horizontal * 2) + 'px';
-                        data.zoomedImg.element.style.transform = 'translateX(-100%)';
-                        break;
+            switch (data.zoomPosition) {
+                case 'left':
+                    data.zoomedImg.element.style.position = 'absolute';
+                    data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical + 'px';
+                    data.zoomedImg.element.style.left = data.zoomedImgOffset.horizontal - (data.zoomedImgOffset.horizontal * 2) + 'px';
+                    data.zoomedImg.element.style.transform = 'translateX(-100%)';
+                    break;
 
-                    case 'top':
-                        data.zoomedImg.element.style.position = 'absolute';
-                        data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical - (data.zoomedImgOffset.vertical * 2) + 'px';
-                        data.zoomedImg.element.style.left = 'calc(50% + ' + data.zoomedImgOffset.horizontal + 'px)';
-                        data.zoomedImg.element.style.transform = 'translate3d(-50%, -100%, 0)';
-                        break;
+                case 'top':
+                    data.zoomedImg.element.style.position = 'absolute';
+                    data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical - (data.zoomedImgOffset.vertical * 2) + 'px';
+                    data.zoomedImg.element.style.left = 'calc(50% + ' + data.zoomedImgOffset.horizontal + 'px)';
+                    data.zoomedImg.element.style.transform = 'translate3d(-50%, -100%, 0)';
+                    break;
 
-                    case 'bottom':
-                        data.zoomedImg.element.style.position = 'absolute';
-                        data.zoomedImg.element.style.bottom = data.zoomedImgOffset.vertical - (data.zoomedImgOffset.vertical * 2) + 'px';
-                        data.zoomedImg.element.style.left = 'calc(50% + ' + data.zoomedImgOffset.horizontal + 'px)';
-                        data.zoomedImg.element.style.transform = 'translate3d(-50%, 100%, 0)';
-                        break;
+                case 'bottom':
+                    data.zoomedImg.element.style.position = 'absolute';
+                    data.zoomedImg.element.style.bottom = data.zoomedImgOffset.vertical - (data.zoomedImgOffset.vertical * 2) + 'px';
+                    data.zoomedImg.element.style.left = 'calc(50% + ' + data.zoomedImgOffset.horizontal + 'px)';
+                    data.zoomedImg.element.style.transform = 'translate3d(-50%, 100%, 0)';
+                    break;
 
-                    case 'original':
-                        data.zoomedImg.element.style.position = 'absolute';
-                        data.zoomedImg.element.style.top = '0px';
-                        data.zoomedImg.element.style.left = '0px';
-                        break;
+                case 'original':
+                    data.zoomedImg.element.style.position = 'absolute';
+                    data.zoomedImg.element.style.top = '0px';
+                    data.zoomedImg.element.style.left = '0px';
+                    break;
 
-                    // Right Position
-                    default:
-                        data.zoomedImg.element.style.position = 'absolute';
-                        data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical + 'px';
-                        data.zoomedImg.element.style.right = data.zoomedImgOffset.horizontal - (data.zoomedImgOffset.horizontal * 2) + 'px';
-                        data.zoomedImg.element.style.transform = 'translateX(100%)';
-                        break;
-                }
+                // Right Position
+                default:
+                    data.zoomedImg.element.style.position = 'absolute';
+                    data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical + 'px';
+                    data.zoomedImg.element.style.right = data.zoomedImgOffset.horizontal - (data.zoomedImgOffset.horizontal * 2) + 'px';
+                    data.zoomedImg.element.style.transform = 'translateX(100%)';
+                    break;
             }
+
 
             // setup event listeners
             container.addEventListener('mousemove', events, false);

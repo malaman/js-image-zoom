@@ -70,7 +70,7 @@
         <p>Zoomed Image Position:</p>
         <form class="setting__zoomed-image-position">
             <fieldset class="setting__inputset__fieldset" onclick="changeZoomPosition()">
-                <input type="radio" id="zoom_position_default" name="ZoomPosition" value="0" checked="checked">
+                <input type="radio" id="zoom_position_default" name="ZoomPosition" value="default" checked="checked">
                 <label for="default"> Default</label><br>
                 <input type="radio" id="zoom_position_left" name="ZoomPosition" value="left">
                 <label for="zoom_position_left"> left</label><br>
@@ -168,7 +168,6 @@
     function changeZoomPosition() {
         var zoomPosition = document.querySelector('input[name = "ZoomPosition"]:checked').value;
         if (zoomPosition !== 'default') {
-            options.zoomDefaultPosition = false;
             options.zoomPosition = zoomPosition;
         } else {
             delete options.zoomPosition;

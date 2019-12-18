@@ -61,8 +61,7 @@ Check basic example in browser:
      * **offset** (object) - {vertical: number, horizontal: number}. Zoomed image offset (optional)
      * **zoomContainer** (node) - DOM node reference where zoomedImage will be appended to (default to the container element of image)
      * **zoomStyle** (string) - custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
-     * **zoomPosition** (string) - position of zoomed image. It can be:  'top', 'left', 'bottom' or the default 'right'. (Ignored if `zoomDefaultPosition` is false)
-     * **zoomDefaultPosition** (boolean) Disable the default position styles in zoomedImage if `false`. (default: true)
+     * **zoomPosition** (string) - position of zoomed image. It can be:  `top`, `left`, `bottom`, `original` or the default `right`.
      * **zoomLensStyle** (string) custom style applied to to zoom lents (i.e. 'opacity: 0.1;background-color: white;')
 
 ## For react users
