@@ -26,24 +26,23 @@ Basic usage example
 <head>
     <meta charset="UTF8">
     <title>Title</title>
-    <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script>
+    <script src="https://unpkg.com/js-image-zoom@0.7.0/js-image-zoom.js" type="application/javascript"></script>
 </head>
 <body>
-    <div id="img-container" style="width: 400px">
-        <img src="https://github.com/malaman/js-image-zoom/blob/master/example/1.jpg" />
+<div id="img-container" style="width: 400px">
+    <img src="https://github.com/malaman/js-image-zoom/blob/master/example/1.jpg?raw=true" />
     <div>
-<script>
-var options = {
-    width: 400,
-    zoomWidth: 500,
-    offset: {vertical: 0, horizontal: 10}
-};
-new ImageZoom(document.getElementById("img-container"), options);
+        <script>
+          var options = {
+            width: 400,
+            zoomWidth: 500,
+            offset: {vertical: 0, horizontal: 10}
+          };
+          new ImageZoom(document.getElementById("img-container"), options);
 
-</script>
+        </script>
 </body>
 </html>
-
 ```
 
 Check basic example in browser:
