@@ -31,16 +31,16 @@ Basic usage example
 <body>
 <div id="img-container" style="width: 400px">
     <img src="https://github.com/malaman/js-image-zoom/blob/master/example/1.jpg?raw=true" />
-    <div>
-        <script>
-          var options = {
-            width: 400,
-            zoomWidth: 500,
-            offset: {vertical: 0, horizontal: 10}
-          };
-          new ImageZoom(document.getElementById("img-container"), options);
+</div>
+<script>
+  var options = {
+    width: 400,
+    zoomWidth: 500,
+    offset: {vertical: 0, horizontal: 10}
+  };
+  new ImageZoom(document.getElementById("img-container"), options);
 
-        </script>
+</script>
 </body>
 </html>
 ```
