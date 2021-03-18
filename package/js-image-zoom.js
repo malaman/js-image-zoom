@@ -117,11 +117,11 @@
         function onSourceImgLoad() {
             // use height determined by browser if height is not set in options
             options.height = options.height || data.sourceImg.element.height;
-            data.sourceImg.element.style.height = options.height + 'px';
+            data.sourceImg.element.style.height = options.fillContainer ? '100%': options.height + 'px';
 
             // use width determined by browser if width is not set in options
-            options.width = options.width || data.sourceImg.element.width;
-            data.sourceImg.element.style.width = options.width + 'px';
+            options.width =  options.width || data.sourceImg.element.width;
+            data.sourceImg.element.style.width = options.fillContainer ? '100%': options.width + 'px';
 
             setZoomedImgSize(options, data);
 
@@ -190,8 +190,8 @@
 
             options = options || {};
             container.style.position = 'relative';
-            data.sourceImg.element.style.width = options.width ? options.width + 'px' : 'auto';
-            data.sourceImg.element.style.height = options.height ? options.height + 'px' : 'auto';
+            data.sourceImg.element.style.width = options.fillContainer ? '100%' : option.width ? options.width + 'px' : 'auto';
+            data.sourceImg.element.style.height = options.fillContainer ? '100%' : options.height ? options.height + 'px' : 'auto';
 
             data.zoomLens.element = container.appendChild(lensDiv);
             data.zoomLens.element.style.display = 'none';

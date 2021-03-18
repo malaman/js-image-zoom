@@ -33,12 +33,20 @@ Basic usage example
         <img src="https://github.com/malaman/js-image-zoom/blob/master/example/1.jpg" />
     <div>
 <script>
-var options = {
+
+var options1 = {
     width: 400,
     zoomWidth: 500,
     offset: {vertical: 0, horizontal: 10}
 };
-new ImageZoom(document.getElementById("img-container"), options);
+
+// If the width and height of the image are not known or to adjust the image to the container of it
+var options2 = {
+    fillContainer: true,
+    offset: {vertical: 0, horizontal: 10}
+};
+
+new ImageZoom(document.getElementById("img-container"), options2);
 
 </script>
 </body>
@@ -55,6 +63,7 @@ Check basic example in browser:
 - **options** (Object) - js-image-zoom options
      * **width** (number) - width of the source image (optional)
      * **height** (number) - height of the source image (optional).
+     * **fillContainer** (boolean) - true/false (optional). To take the size of the container or if the width & height of the image/container are not known
      * **zoomWidth** (number) - width of the zoomed image. Zoomed image height equals source image height (optional)
      * **img** (string) - url of the source image. Provided if container does not contain img element as a tag (optional)
      * **scale** (number) - zoom scale. if not provided, scale is calculated as natural image size / image size, provided in params (optional if zoomWidth param is provided)

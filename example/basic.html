@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF8">
     <title>Title</title>
-    <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script>
+    <!-- <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script> -->
+    <script src="../package/js-image-zoom.js"></script>
 </head>
 <body>
-    <div id="img-container" style="width: 400px">
+    <div id="img-container" style="width: 500px; height:300px; border: 5px solid red;">
         <img src="1.jpg" />
     <div>
 <script>
-var options = {
+var options1 = {
     width: 400,
     zoomWidth: 500,
     offset: {vertical: 0, horizontal: 10}
 };
-new ImageZoom(document.getElementById("img-container"), options);
+
+// If the width and height of the image are not known or to adjust the image to the container of it
+var options2 = {
+    fillContainer: true,
+    offset: {vertical: 0, horizontal: 10}
+};
+new ImageZoom(document.getElementById("img-container"), options2);
 
 </script>
 </body>
