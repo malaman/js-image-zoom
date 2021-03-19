@@ -103,7 +103,7 @@
     var defaultOptions = {
         width: 400,
         height: 250,
-        zoomWidth: 500,
+        zoomSize: 500,
         img: "1.jpg",
         offset: {vertical: 0, horizontal: 10}
     };
@@ -184,7 +184,7 @@
             document.getElementById('container').classList.add('onehundredpercent');
             delete options.width;
             delete options.height;
-            delete options.zoomWidth;
+            delete options.zoomSize;
         } else {
             document.getElementById('container').classList.remove('onehundredpercent');
             resetOptions();
