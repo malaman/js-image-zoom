@@ -10,6 +10,7 @@
      * @param {Object} options js-image-zoom options (required)
      * **width** (number) - width of the source image (optional)
      * **height** (number) - height of the source image (optional).
+     * **zoomSize** (number) - set equal width and height of the zoomed image. (optional)
      * **zoomWidth** (number) - width of the zoomed image. Zoomed image height equals source image height (optional)
      * **img** (string) - url of the source image. Provided if container does not contain img element as a tag (optional)
      * **scale** (number) - zoom scale. if not provided, scale is calculated as natural image size / image size, provided in params (optional if zoomWidth param is provided)
@@ -105,6 +106,9 @@
             if (options.scale) {
                 data.zoomedImg.element.style.width = options.width * options.scale + 'px';
                 data.zoomedImg.element.style.height = options.height * options.scale + 'px';
+            } else if (options.zoomSize) {
+                data.zoomedImg.element.style.width = options.zoomSize + 'px';
+                data.zoomedImg.element.style.height = options.zoomSize + 'px';
             } else if (options.zoomWidth) {
                 data.zoomedImg.element.style.width = options.zoomWidth + 'px';
                 data.zoomedImg.element.style.height = data.sourceImg.element.style.height;
@@ -148,6 +152,12 @@
             if (options.scale) {
                 data.zoomLens.width = options.width / (data.sourceImg.naturalWidth / (options.width * options.scale));
                 data.zoomLens.height = options.height / (data.sourceImg.naturalHeight / (options.height * options.scale));
+            }
+
+            // else if zoomSize is set
+            else if (options.zoomSize) {
+                data.zoomLens.width = options.zoomSize / scaleX;
+                data.zoomLens.height = options.zoomSize / scaleX;
             }
 
             // else if zoomWidth is set
@@ -231,8 +241,7 @@
                     data.zoomedImg.element.style.left = '0px';
                     break;
 
-                // Right Position
-                default:
+                default: // right position
                     data.zoomedImg.element.style.position = 'absolute';
                     data.zoomedImg.element.style.top = data.zoomedImgOffset.vertical + 'px';
                     data.zoomedImg.element.style.right = data.zoomedImgOffset.horizontal - (data.zoomedImgOffset.horizontal * 2) + 'px';
@@ -240,27 +249,23 @@
                     break;
             }
 
-
             // setup event listeners
             container.addEventListener('mousemove', events, false);
             container.addEventListener('mouseenter', events, false);
             container.addEventListener('mouseleave', events, false);
             data.zoomLens.element.addEventListener('mouseenter', events, false);
             data.zoomLens.element.addEventListener('mouseleave', events, false);
-            window.addEventListener('scroll', events, false);
 
             return data;
         }
 
         function kill() {
-
             // remove event listeners
             container.removeEventListener('mousemove', events, false);
             container.removeEventListener('mouseenter', events, false);
             container.removeEventListener('mouseleave', events, false);
             data.zoomLens.element.removeEventListener('mouseenter', events, false);
             data.zoomLens.element.removeEventListener('mouseleave', events, false);
-            window.removeEventListener('scroll', events, false);
 
             // remove dom nodes
             if (data.zoomLens && data.zoomedImg) {
@@ -287,8 +292,6 @@
                         return this.handleMouseEnter(event);
                     case 'mouseleave':
                         return this.handleMouseLeave(event);
-                    case 'scroll':
-                        return this.handleScroll(event);
                 }
             },
             handleMouseMove: function (event) {
@@ -297,15 +300,19 @@
                 var backgroundTop;
                 var backgroundRight;
                 var backgroundPosition;
+
+                offset = getOffset(data.sourceImg.element);
+
                 if (offset) {
                     offsetX = zoomLensLeft(event.clientX - offset.left);
                     offsetY = zoomLensTop(event.clientY - offset.top);
+
                     backgroundTop = offsetX * scaleX;
                     backgroundRight = offsetY * scaleY;
                     backgroundPosition = '-' + backgroundTop + 'px ' + '-' + backgroundRight + 'px';
+
                     data.zoomedImg.element.style.backgroundPosition = backgroundPosition;
                     data.zoomLens.element.style.cssText += 'top:' + offsetY + 'px;' + 'left:' + offsetX + 'px;display: block;';
-
                 }
             },
             handleMouseEnter: function () {
@@ -317,9 +324,6 @@
                 data.zoomedImg.element.style.display = 'none';
                 data.zoomLens.element.style.display = 'none';
             },
-            handleScroll: function () {
-                offset = getOffset(data.sourceImg.element);
-            }
         };
 
         // Setup/Initialize library

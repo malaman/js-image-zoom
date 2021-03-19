@@ -35,7 +35,7 @@ Basic usage example
 <script>
 var options = {
     width: 400,
-    zoomWidth: 500,
+    zoomSize: 500,
     offset: {vertical: 0, horizontal: 10}
 };
 new ImageZoom(document.getElementById("img-container"), options);
@@ -55,9 +55,10 @@ Check basic example in browser:
 - **options** (Object) - js-image-zoom options
      * **width** (number) - width of the source image (optional)
      * **height** (number) - height of the source image (optional).
-     * **zoomWidth** (number) - width of the zoomed image. Zoomed image height equals source image height (optional)
+     * **zoomSize** (number) - set equal width and height of the zoomed image. (optional)
+     * **zoomWidth** (number) - width of the zoomed image. Zoomed image height equals source image height (optional will be overwritten by zoomSize)
      * **img** (string) - url of the source image. Provided if container does not contain img element as a tag (optional)
-     * **scale** (number) - zoom scale. if not provided, scale is calculated as natural image size / image size, provided in params (optional if zoomWidth param is provided)
+     * **scale** (number) - zoom scale. if not provided, scale is calculated as natural image size / image size, provided in params (optional if zoomWidth or zoomSize param is provided)
      * **offset** (object) - {vertical: number, horizontal: number}. Zoomed image offset (optional)
      * **zoomContainer** (node) - DOM node reference where zoomedImage will be appended to (default to the container element of image)
      * **zoomStyle** (string) - custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
