@@ -190,7 +190,7 @@
 
             options = options || {};
             container.style.position = 'relative';
-            data.sourceImg.element.style.width = options.fillContainer ? '100%' : option.width ? options.width + 'px' : 'auto';
+            data.sourceImg.element.style.width = options.fillContainer ? '100%' : options.width ? options.width + 'px' : 'auto';
             data.sourceImg.element.style.height = options.fillContainer ? '100%' : options.height ? options.height + 'px' : 'auto';
 
             data.zoomLens.element = container.appendChild(lensDiv);
