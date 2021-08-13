@@ -304,7 +304,7 @@
                     backgroundRight = offsetY * scaleY;
                     backgroundPosition = '-' + backgroundTop + 'px ' + '-' + backgroundRight + 'px';
                     data.zoomedImg.element.style.backgroundPosition = backgroundPosition;
-                    data.zoomLens.element.style.cssText += 'top:' + offsetY + 'px;' + 'left:' + offsetX + 'px;display: block;';
+                    data.zoomLens.element.style.cssText += 'transform:' + 'translate(' + offsetX + 'px,' + offsetY +'px);display: block;left:0px;top:0px;'
 
                 }
             },
