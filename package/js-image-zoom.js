@@ -16,8 +16,8 @@
      * **offset** (object) - {vertical: number, horizontal: number}. Zoomed image offset (optional)
      * **zoomContainer** (node) - DOM node reference where zoomedImage will be appended to (default to the container element of image)
      * **zoomStyle** (string) - custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
-     * **zoomPosition** (string) - position of zoomed image. It can be:  `top`, `left`, `bottom`, `original` or the default `right`.
-     * **zoomLensStyle** (string) custom style applied to to zoom lents (i.e. 'opacity: 0.1;background-color: white;')
+     * **zoomPosition** (string) - position of zoomed image. It can be: `top`, `left`, `bottom`, `original` or the default `right`.
+     * **zoomLensStyle** (string) custom style applied to zoom lents (i.e. 'opacity: 0.1;background-color: white;')
      */
     return function ImageZoom(container, opts) {
         "use strict";
