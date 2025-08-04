@@ -37,13 +37,15 @@ Basic usage example
 var options1 = {
     width: 400,
     zoomWidth: 500,
-    offset: {vertical: 0, horizontal: 10}
+    offset: {vertical: 0, horizontal: 10},
+    alt: 'Image'
 };
 
 // If the width and height of the image are not known or to adjust the image to the container of it
 var options2 = {
     fillContainer: true,
-    offset: {vertical: 0, horizontal: 10}
+    offset: {vertical: 0, horizontal: 10},
+    alt: 'Image'
 };
 
 new ImageZoom(document.getElementById("img-container"), options2);
@@ -72,6 +74,7 @@ Check basic example in browser:
      * **zoomStyle** (string) - custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
      * **zoomPosition** (string) - position of zoomed image. It can be:  `top`, `left`, `bottom`, `original` or the default `right`.
      * **zoomLensStyle** (string) custom style applied to to zoom lents (i.e. 'opacity: 0.1;background-color: white;')
+     * **alt** (string) - alt text for the source image, used for accessibility (optional)
 
 ## For react users
 

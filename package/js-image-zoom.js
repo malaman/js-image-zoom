@@ -18,6 +18,7 @@
      * **zoomStyle** (string) - custom style applied to the zoomed image (i.e. 'opacity: 0.1;background-color: white;')
      * **zoomPosition** (string) - position of zoomed image. It can be: `top`, `left`, `bottom`, `original` or the default `right`.
      * **zoomLensStyle** (string) custom style applied to zoom lents (i.e. 'opacity: 0.1;background-color: white;')
+     * **alt** (string) - alt text for the source image, used for accessibility (optional)
      */
     return function ImageZoom(container, opts) {
         "use strict";
@@ -175,6 +176,11 @@
             if (options.img) {
                 var img = document.createElement('img');
                 img.src = options.img;
+                img.alt = options.alt || '';
+                img.setAttribute('role', 'img');
+                if (options.alt) {
+                    img.setAttribute('aria-label', options.alt); // Wsparcie ARIA
+                }
                 data.sourceImg.element = container.appendChild(img);
             }
 
@@ -190,6 +196,11 @@
 
             options = options || {};
             container.style.position = 'relative';
+            container.setAttribute('tabindex', '0');
+            container.setAttribute('role', 'group');
+            if (options.alt) {
+                container.setAttribute('aria-label', options.alt + ' (zoomable image)');
+            }
             data.sourceImg.element.style.width = options.fillContainer ? '100%' : options.width ? options.width + 'px' : 'auto';
             data.sourceImg.element.style.height = options.fillContainer ? '100%' : options.height ? options.height + 'px' : 'auto';
 
